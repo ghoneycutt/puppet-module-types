@@ -8,7 +8,7 @@ of the default types that ship with Puppet.
 
 ## mount
 <pre>
-types::mount:
+types::mounts:
   dvd:
     device: /dev/dvd
     fstype: iso9660
