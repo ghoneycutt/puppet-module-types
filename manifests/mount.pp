@@ -3,7 +3,7 @@
 define types::mount (
   $device,
   $fstype,
-  $ensure      = present,
+  $ensure      = mounted,
   $atboot      = true,
   $blockdevice = undef,
   $dump        = undef,
