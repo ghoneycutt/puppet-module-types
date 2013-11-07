@@ -14,7 +14,13 @@ define types::mount (
   $remounts    = $remounts,
 ) {
 
+  # validate params
   validate_re($ensure, '^(present)|(unmounted)|(absent)|(mounted)$', "types::mount::${name}::ensure is invalid and does not match the regex.")
+  validate_absolute_path($target)
+
+  # ensure target exists
+  include common
+  common::mkdir_p { $target: }
 
   mount { "types_mount_${name}":
     ensure      => $ensure,
@@ -28,5 +34,6 @@ define types::mount (
     provider    => $provider,
     remounts    => $remounts,
     target      => $target,
+    require     => Mkdir_p[$target],
   }
 }
