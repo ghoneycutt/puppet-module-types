@@ -9,13 +9,16 @@ of the default types that ship with Puppet.
 ## mount
 <pre>
 types::mounts:
-  dvd:
+  /mnt:
     device: /dev/dvd
     fstype: iso9660
-    target: /mnt
-  home:
+    atboot: no
+    remounts: true
+  /srv/nfs/home:
     device: nfsserver:/export/home
     fstype: nfs
-    target: /srv/nfs/home
     options: rw,rsize=8192,wsize=8192
+    atboot: yes
+    remounts: true
+    blockdevice: '-'
 </pre>

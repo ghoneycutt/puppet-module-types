@@ -2,31 +2,30 @@ require 'spec_helper'
 
 describe 'types::mount' do
   context 'mount with bare minimum specified' do
-    let(:title) { 'dvd' }
+    let(:title) { '/mnt' }
     let(:params) do
       { :device => '/dev/dvd',
         :fstype => 'iso9660',
-        :target => '/mnt',
       }
     end
+    let(:facts) { { :osfamily => 'RedHat' } }
 
     it {
-      should contain_mount('types_mount_dvd').with({
-        'ensure' => 'present',
+      should contain_mount('types_mount_/mnt').with({
+        'ensure' => 'mounted',
+        'name'   => '/mnt',
         'atboot' => true,
         'device' => '/dev/dvd',
         'fstype' => 'iso9660',
-        'target' => '/mnt',
       })
     }
   end
 
   context 'mount with all options specified' do
-    let(:title) { 'fiction' }
+    let(:title) { '/mnt' }
     let(:params) do
       { :device      => '/dev/fiction',
         :fstype      => 'iso9660',
-        :target      => '/mnt',
         :ensure      => 'absent',
         :atboot      => false,
         :blockdevice => '/dev/blockdevice',
@@ -37,14 +36,15 @@ describe 'types::mount' do
         :remounts    => true,
       }
     end
+    let(:facts) { { :osfamily => 'RedHat' } }
 
     it {
-      should contain_mount('types_mount_fiction').with({
+      should contain_mount('types_mount_/mnt').with({
         'ensure'      => 'absent',
         'atboot'      => false,
         'device'      => '/dev/fiction',
         'fstype'      => 'iso9660',
-        'target'      => '/mnt',
+        'name'        => '/mnt',
         'blockdevice' => '/dev/blockdevice',
         'dump'        => '1',
         'options'     => 'ro',

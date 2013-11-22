@@ -8,3 +8,4 @@ description 'put a description here'
 project_page 'https://github.com/ghoneycutt/puppet-module-types'
 
 dependency 'puppetlabs/stdlib', '3.2.x'
+dependency 'ghoneycutt/common', '1.0.2'
