@@ -22,7 +22,7 @@ define types::mount (
   include common
   common::mkdir_p { $name: }
 
-  mount { "types_mount_${name}":
+  mount { $name:
     ensure      => $ensure,
     name        => $name,
     atboot      => $atboot,
