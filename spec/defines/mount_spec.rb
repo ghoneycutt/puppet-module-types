@@ -11,7 +11,7 @@ describe 'types::mount' do
     let(:facts) { { :osfamily => 'RedHat' } }
 
     it {
-      should contain_mount('types_mount_/mnt').with({
+      should contain_mount('/mnt').with({
         'ensure' => 'mounted',
         'name'   => '/mnt',
         'atboot' => true,
@@ -39,7 +39,7 @@ describe 'types::mount' do
     let(:facts) { { :osfamily => 'RedHat' } }
 
     it {
-      should contain_mount('types_mount_/mnt').with({
+      should contain_mount('/mnt').with({
         'ensure'      => 'absent',
         'atboot'      => false,
         'device'      => '/dev/fiction',
