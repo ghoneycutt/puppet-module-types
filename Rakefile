@@ -12,4 +12,7 @@ task :validate do
   Dir['spec/**/*.rb','lib/**/*.rb'].each do |spec_path|
     sh "ruby -c #{spec_path}" unless spec_path =~ /spec\/fixtures/
   end
+  Dir['templates/**/*.erb'].each do |template|
+    sh "erb -P -x -T '-' #{template} | ruby -c"
+  end
 end
