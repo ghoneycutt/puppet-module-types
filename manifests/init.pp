@@ -7,10 +7,7 @@ class types (
 ) {
 
   if $mounts != undef {
-    if type($mounts) != 'hash' {
-      fail('types::mounts must be a hash.')
-    } else {
-      create_resources('types::mount',$mounts)
-    }
+    validate_hash($mounts)
+    create_resources('types::mount',$mounts)
   }
 }

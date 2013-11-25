@@ -7,15 +7,16 @@ define types::mount (
   $atboot      = true,
   $blockdevice = undef,
   $dump        = undef,
-  $options     = $options,
-  $pass        = $pass,
-  $provider    = $provider,
-  $remounts    = $remounts,
+  $options     = undef,
+  $pass        = undef,
+  $provider    = undef,
+  $remounts    = undef,
   $target      = undef,
 ) {
 
   # validate params
-  validate_re($ensure, '^(present)|(unmounted)|(absent)|(mounted)$', "types::mount::${name}::ensure is invalid and does not match the regex.")
+  validate_re($ensure, '^(present)|(unmounted)|(absent)|(mounted)$',
+    "types::mount::${name}::ensure is invalid and does not match the regex.")
   validate_absolute_path($name)
 
   # ensure target exists
