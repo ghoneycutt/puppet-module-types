@@ -62,8 +62,57 @@ describe 'types' do
     }
   end
 
+  context 'with file specified as a hash' do
+    let(:facts) { { :osfamily => 'RedHat' } }
+    let(:params) { { :file => {
+      '/localdisk' => {
+        'ensure'   => 'directory',
+        'mode'     => '0755',
+        'owner'    => 'root',
+        'group'    => 'root',
+      },
+      '/tmp/file' => {
+        'ensure'      => 'present',
+        'mode'        => '644',
+        'owner'        => 'root',
+        'group'       => 'root',
+        'content'     => 'This is the content',
+      }
+    } } }
+
+    it { should include_class('types') }
+
+    it {
+      should contain_file('/localdisk').with({
+        'ensure'   => 'directory',
+        'mode'     => '0755',
+        'owner'    => 'root',
+        'group'    => 'root',
+      })
+    }
+
+    it {
+      should contain_file('/tmp/file').with({
+        'ensure'      => 'present',
+        'mode'        => '644',
+        'owner'        => 'root',
+        'group'       => 'root',
+        'content'     => 'This is the content',
+      })
+    }
+
+  end
   context 'with mounts specified as an invalid type' do
     let(:params) { { :mounts => ['not','a','hash'] } }
+
+    it 'should fail' do
+      expect {
+        should include_class('types')
+      }.to raise_error(Puppet::Error)
+    end
+  end
+  context 'with file specified as an invalid type' do
+    let(:params) { { :file => ['not','a','hash'] } }
 
     it 'should fail' do
       expect {
