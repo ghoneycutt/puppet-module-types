@@ -2,27 +2,27 @@
 #
 define types::file (
   $path                    = $name,
-  $content                 = undef,
   $ensure                  = present,
-  $backup                  = main,
-  $checksum                = md5,
+  $owner                   = root,
+  $group                   = root,
+  $mode                    = 0644,
+  $content                 = undef,
+  $backup                  = undef,
+  $checksum                = undef,
   $force                   = undef,
-  $group                   = undef,
   $ignore                  = undef,
   $links                   = undef,
-  $mode                    = undef,
-  $owner                   = undef,
   $provider                = undef,
   $purge                   = undef,
-  $recurse                 = false,
+  $recurse                 = undef,
   $recurselimit            = undef,
-  $replace                 = true,
+  $replace                 = undef,
   $selinux_ignore_defaults = undef,
   $selrange                = undef,
   $selrole                 = undef,
   $seltype                 = undef,
   $seluser                 = undef,
-  $show_diff               = true,
+  $show_diff               = undef,
   $source                  = undef,
   $sourceselect            = undef,
   $target                  = undef,
@@ -32,6 +32,7 @@ define types::file (
   validate_re($ensure, '^(present)|(absent)|(file)|(directory)|(link)$',
     "types::file::${name}::ensure is invalid and does not match the regex.")
   validate_absolute_path($name)
+  validate_re($mode, '^\d{4}$', "type::file::${name}::mode must be exactly 4 digits.")
 
   file { $name:
     ensure                  => $ensure,

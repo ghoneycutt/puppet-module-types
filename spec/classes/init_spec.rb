@@ -71,12 +71,43 @@ describe 'types' do
         'owner'    => 'root',
         'group'    => 'root',
       },
-      '/tmp/file' => {
+      '/tmp/file1' => {
         'ensure'      => 'present',
-        'mode'        => '644',
+        'mode'        => '777',
         'owner'        => 'root',
         'group'       => 'root',
         'content'     => 'This is the content',
+      }
+      '/tmp/file2' => {
+      }
+      '/softlink' => {
+        'ensure'    => 'link',
+        'target'    => '/etc/motd',
+      }
+      '/tmp/dir' => {
+        'path'                    = '/tmp/realdir',
+        'ensure'                  = 'directory',
+        'owner'                   = 'root',
+        'group'                   = 'root',
+        'mode'                    = '0664',
+        'backup'                  = 'main',
+        'checksum'                = 'md5',
+        'force'                   = 'purge',
+        'ignore'                  = [".svn", ".foo"],
+        'links'                   = 'follow',
+        'provider'                = 'posix',
+        'purge'                   = true,
+        'recurse'                 = true,
+        'recurselimit'            = 2,
+        'replace'                 = false,
+        'selinux_ignore_defaults' = false,
+        'selrange'                = 's0',
+        'selrole'                 = 'object_r',
+        'seltype'                 = 'var_t',
+        'seluser'                 = 'system_u',
+        'show_diff'               = false,
+        'source'                  = "puppet://modules/types/mydir",
+        'sourceselect'            = 'first',
       }
     } } }
 
@@ -111,8 +142,19 @@ describe 'types' do
       }.to raise_error(Puppet::Error)
     end
   end
-  context 'with file specified as an invalid type' do
-    let(:params) { { :file => ['not','a','hash'] } }
+
+  context 'with files specified as an invalid type' do
+    let(:params) { { :files => ['not','a','hash'] } }
+
+    it 'should fail' do
+      expect {
+        should include_class('types')
+      }.to raise_error(Puppet::Error)
+    end
+  end
+
+  context 'with files specified as an invalid type' do
+    let(:params) { { :files => ['not','a','hash'] } }
 
     it 'should fail' do
       expect {
