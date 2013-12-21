@@ -7,6 +7,8 @@ such as ensuring directories. Without specifying any hashes, this module will ta
 
 You can add any of the supported options for the types in this module. Please see the Puppet Labs [Type Reference](http://docs.puppetlabs.com/references/stable/type.html) for more information.
 
+[![Build Status](https://api.travis-ci.org/ghoneycutt/puppet-module-types.png?branch=master)](https://travis-ci.org/ghoneycutt/puppet-module-types)
+
 ===
 
 # Compatibility
