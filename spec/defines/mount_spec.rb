@@ -1,6 +1,6 @@
 require 'spec_helper'
-
 describe 'types::mount' do
+
   context 'mount with bare minimum specified' do
     let(:title) { '/mnt' }
     let(:params) do
@@ -67,8 +67,50 @@ describe 'types::mount' do
 
     it 'should fail' do
       expect {
-        should include_class('types')
+        should contain_class('types')
       }.to raise_error(Puppet::Error,/types::mount::invalid::ensure is invalid and does not match the regex./)
+    end
+  end
+
+  describe 'with \'options\' parameter set to \'defaults\'' do
+    context 'on osfamily Solaris' do
+      let(:title) { '/mnt' }
+      let(:params) do
+        { :device      => '/dev/fiction',
+          :fstype      => 'iso9660',
+          :options     => 'defaults',
+        }
+      end
+      let(:facts) { { :osfamily => 'Solaris' } }
+
+      it {
+        should contain_mount('/mnt').with({
+          'ensure'      => 'mounted',
+          'device'      => '/dev/fiction',
+          'fstype'      => 'iso9660',
+          'options'     => '-',
+        })
+      }
+    end
+
+    context 'on osfamily that is not Solaris' do
+      let(:title) { '/mnt' }
+      let(:params) do
+        { :device      => '/dev/fiction',
+          :fstype      => 'iso9660',
+          :options     => 'defaults',
+        }
+      end
+      let(:facts) { { :osfamily => 'Debian' } }
+
+      it {
+        should contain_mount('/mnt').with({
+          'ensure'      => 'mounted',
+          'device'      => '/dev/fiction',
+          'fstype'      => 'iso9660',
+          'options'     => 'defaults',
+        })
+      }
     end
   end
 end

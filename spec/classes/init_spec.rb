@@ -1,8 +1,10 @@
 require 'spec_helper'
 describe 'types' do
 
+  it { should compile.with_all_deps }
+
   context 'with default options' do
-    it { should include_class('types') }
+    it { should contain_class('types') }
   end
 
   context 'with mounts specified as a hash' do
@@ -23,7 +25,7 @@ describe 'types' do
       }
     } } }
 
-    it { should include_class('types') }
+    it { should contain_class('types') }
 
     it {
       should contain_mount('/mnt').with({
@@ -67,7 +69,7 @@ describe 'types' do
 
     it 'should fail' do
       expect {
-        should include_class('types')
+        should contain_class('types')
       }.to raise_error(Puppet::Error)
     end
   end
