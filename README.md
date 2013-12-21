@@ -29,7 +29,12 @@ Hash of resource type `mount`.
 
 ## `types::mount`
 
-Besides ensuring the mount resource, will also ensure that the directory for the mount exists.
+Besides ensuring the mount resource, will also ensure that the directory for
+the mount exists.
+
+If `options` parameter is passed and it is set to 'defaults' on osfamily
+Solaris, it will use '-' as the mount option instead of 'defaults', as
+'defaults' is not supported on Solaris.
 
 ### Parameters required or with defaults
 
