@@ -73,4 +73,53 @@ describe 'types' do
       }.to raise_error(Puppet::Error)
     end
   end
+
+  context 'with cron specified as a hash' do
+    let(:facts) { { :osfamily => 'RedHat' } }
+    let(:params) { { :cron => {
+      'cronjob-1' => {
+        'command' => '/usr/local/bin/some-script.sh',
+        'hour'    => '0',
+        'minute'  => '10',
+        'weekday' => '0',
+      },
+      'cronjob-2' => {
+        'command' => '/usr/local/bin/script.sh',
+        'hour'    => '23',
+        'minute'  => '0',
+        'user'    => 'www-user',
+      }
+    } } }
+
+    it { should contain_class('types') }
+
+    it {
+      should contain_cron('cronjob-1').with({
+        'ensure'  => 'present',
+        'command' => '/usr/local/bin/some-script.sh',
+        'hour'    => '0',
+        'minute'  => '10',
+        'weekday' => '0',
+      })
+    }
+    it {
+      should contain_cron('cronjob-2').with({
+        'ensure'  => 'present',
+        'command' => '/usr/local/bin/script.sh',
+        'hour'    => '23',
+        'minute'  => '0',
+        'user'    => 'www-user',
+      })
+    }
+  end
+
+  context 'with cron specified as an invalid type' do
+    let(:params) { { :cron => ['not','a','hash'] } }
+
+    it 'should fail' do
+      expect {
+        should contain_class('types')
+      }.to raise_error(Puppet::Error)
+    end
+  end
 end
