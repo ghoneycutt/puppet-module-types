@@ -3,13 +3,13 @@
 # Module to manage types
 #
 class types (
-  $cron   = undef,
-  $mounts = undef,
+  $crons   = undef,
+  $mounts  = undef,
 ) {
 
-  if $cron != undef {
-    validate_hash($cron)
-    create_resources('types::cron',$cron)
+  if $crons != undef {
+    validate_hash($crons)
+    create_resources('types::cron',$crons)
   }
 
   if $mounts != undef {

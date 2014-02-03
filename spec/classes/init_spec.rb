@@ -76,7 +76,7 @@ describe 'types' do
 
   context 'with cron specified as a hash' do
     let(:facts) { { :osfamily => 'RedHat' } }
-    let(:params) { { :cron => {
+    let(:params) { { :crons => {
       'cronjob-1' => {
         'command' => '/usr/local/bin/some-script.sh',
         'hour'    => '0',
@@ -114,7 +114,7 @@ describe 'types' do
   end
 
   context 'with cron specified as an invalid type' do
-    let(:params) { { :cron => ['not','a','hash'] } }
+    let(:params) { { :crons => ['not','a','hash'] } }
 
     it 'should fail' do
       expect {

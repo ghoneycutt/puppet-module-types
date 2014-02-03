@@ -19,6 +19,12 @@ This module targets Puppet v3.
 
 # Parameters
 
+crons
+-----
+Hash of resource type `cron`.
+
+- *Default*: undef
+
 mounts
 ------
 Hash of resource type `mount`.
@@ -28,6 +34,24 @@ Hash of resource type `mount`.
 ===
 
 # Defines
+
+## `types::cron`
+No helper resources are implemented. Simply passes attributes to a cron resource.
+
+### Parameters required or with defaults
+
+command
+-------
+The command to execute in the cron job.
+
+- *Required*
+
+ensure
+------
+State of cron resource. Valid values are 'present' and 'absent'.
+
+- *Default*: 'present'
+
 
 ## `types::mount`
 
@@ -70,6 +94,19 @@ Boolean to mount at boot.
 ===
 
 # Hiera
+
+## cron
+<pre>
+types::crons:
+  'clean puppet filebucket':
+    command: '/usr/bin/find /var/lib/puppet/clientbucket/ -type f -mtime +30 -exec /bin/rm -fr {} \;'
+    hour: 0
+    minute: 0
+  'purge old puppet dashboard reports':
+    command: '/usr/bin/rake -f /usr/share/puppet-dashboard/Rakefile RAILS_ENV=production reports:prune upto=30 unit=day >> /var/log/puppet/dashboard_maintenance.log'
+    hour: 0
+    minute: 30
+</pre>
 
 ## mount
 <pre>
