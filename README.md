@@ -25,6 +25,12 @@ Hash of resource type `cron`.
 
 - *Default*: undef
 
+files
+-----
+Hash of resource type `file`.
+
+- *Default*: undef
+
 mounts
 ------
 Hash of resource type `mount`.
@@ -52,6 +58,34 @@ State of cron resource. Valid values are 'present' and 'absent'.
 
 - *Default*: 'present'
 
+## `types::file`
+No helper resources are implemented. Simply passes attributes to a file resource. The path attribute is not used, so the title must be the fully qualified path.
+
+### Parameters required or with defaults
+
+ensure
+------
+Whether the file should exist, and if so what kind of file it should be. Possible values are 'present', 'absent', 'file', 'directory', and 'link'.
+
+- *Default*: 'present'
+
+owner
+-----
+The user to whom the file should belong.
+
+- *Default*: 'root'
+
+group
+-----
+Which group should own the file.
+
+- *Default*: 'root'
+
+mode
+----
+Four digit mode.
+
+- *Default*: '0644'
 
 ## `types::mount`
 
@@ -106,6 +140,18 @@ types::crons:
     command: '/usr/bin/rake -f /usr/share/puppet-dashboard/Rakefile RAILS_ENV=production reports:prune upto=30 unit=day >> /var/log/puppet/dashboard_maintenance.log'
     hour: 0
     minute: 30
+</pre>
+
+## file
+<pre>
+types::files:
+  '/tmp/foo':
+    ensure: 'file'
+  '/tmp/dir':
+    ensure: 'directory'
+  '/tmp/link':
+    ensure: 'link'
+    target: '/tmp/foo'
 </pre>
 
 ## mount
