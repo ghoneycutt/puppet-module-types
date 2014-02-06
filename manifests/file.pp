@@ -1,14 +1,13 @@
 # == Define: types::file
 #
 define types::file (
-  $path                    = $name,
   $ensure                  = present,
   $owner                   = root,
   $group                   = root,
   $mode                    = 0644,
-  $content                 = undef,
   $backup                  = undef,
   $checksum                = undef,
+  $content                 = undef,
   $force                   = undef,
   $ignore                  = undef,
   $links                   = undef,
@@ -32,14 +31,16 @@ define types::file (
   validate_re($ensure, '^(present)|(absent)|(file)|(directory)|(link)$',
     "types::file::${name}::ensure is invalid and does not match the regex.")
   validate_absolute_path($name)
-  validate_re($mode, '^\d{4}$', "type::file::${name}::mode must be exactly 4 digits.")
+  validate_re($mode, '^\d{4}$', "types::file::${name}::mode must be exactly 4 digits.")
 
   file { $name:
     ensure                  => $ensure,
     owner                   => $owner,
     group                   => $group,
     mode                    => $mode,
+    checksum                => $checksum,
     content                 => $content,
+    backup                  => $backup,
     force                   => $force,
     ignore                  => $ignore,
     links                   => $links,

@@ -64,7 +64,7 @@ describe 'types' do
     }
   end
 
-  context 'with file specified as a hash' do
+  context 'with files specified as a hash' do
     let(:facts) { { :osfamily => 'RedHat' } }
     let(:params) { { :files => {
       '/localdisk' => {
@@ -74,28 +74,15 @@ describe 'types' do
         'group'  => 'root',
       },
       '/tmp/file1' => {
-        'ensure'  => 'present',
-        'mode'    => '0777',
-        'owner'   => 'root',
-        'group'   => 'root',
-        'content' => 'This is the content',
-      },
-      '/tmp/file2' => {
-      },
-      '/softlink' => {
-        'ensure' => 'link',
-        'target' => '/etc/motd',
-      },
-      '/tmp/dir' => {
-        'path'                    => '/tmp/realdir',
-        'ensure'                  => 'directory',
+        'ensure'                  => 'present',
+        'mode'                    => '0777',
         'owner'                   => 'root',
         'group'                   => 'root',
-        'mode'                    => '0664',
-        'backup'                  => 'main',
-        'checksum'                => 'md5',
+        'content'                 => 'This is the content',
+        'backup'                  => 'foobucket',
+        'checksum'                => 'none',
         'force'                   => 'purge',
-        'ignore'                  => [".svn", ".foo"],
+        'ignore'                  => ['.svn', '.foo'],
         'links'                   => 'follow',
         'provider'                => 'posix',
         'purge'                   => true,
@@ -108,8 +95,20 @@ describe 'types' do
         'seltype'                 => 'var_t',
         'seluser'                 => 'system_u',
         'show_diff'               => false,
-        'source'                  => "puppet://modules/types/mydir",
+        'source'                  => 'puppet://modules/types/mydir',
         'sourceselect'            => 'first',
+      },
+      '/tmp/file2' => {
+      },
+      '/softlink' => {
+        'ensure' => 'link',
+        'target' => '/etc/motd',
+      },
+      '/tmp/dir' => {
+        'ensure'                  => 'directory',
+        'owner'                   => 'root',
+        'group'                   => 'root',
+        'mode'                    => '0777',
       },
     } } }
 
@@ -117,20 +116,38 @@ describe 'types' do
 
     it {
       should contain_file('/localdisk').with({
-        'ensure' => 'directory',
-        'mode'   => '0755',
-        'owner'  => 'root',
-        'group'  => 'root',
+        'ensure'  => 'directory',
+        'mode'    => '0755',
+        'owner'   => 'root',
+        'group'   => 'root',
       })
     }
 
     it {
       should contain_file('/tmp/file1').with({
-        'ensure'  => 'present',
-        'mode'    => '0777',
-        'owner'   => 'root',
-        'group'   => 'root',
-        'content' => 'This is the content',
+        'ensure'                  => 'present',
+        'mode'                    => '0777',
+        'owner'                   => 'root',
+        'group'                   => 'root',
+        'content'                 => 'This is the content',
+        'backup'                  => 'foobucket',
+        'checksum'                => 'none',
+        'force'                   => 'purge',
+        'ignore'                  => ['.svn', '.foo'],
+        'links'                   => 'follow',
+        'provider'                => 'posix',
+        'purge'                   => true,
+        'recurse'                 => true,
+        'recurselimit'            => 2,
+        'replace'                 => false,
+        'selinux_ignore_defaults' => false,
+        'selrange'                => 's0',
+        'selrole'                 => 'object_r',
+        'seltype'                 => 'var_t',
+        'seluser'                 => 'system_u',
+        'show_diff'               => false,
+        'source'                  => 'puppet://modules/types/mydir',
+        'sourceselect'            => 'first',
       })
     }
 
@@ -143,7 +160,16 @@ describe 'types' do
       })
     }
 
+    it {
+      should contain_file('/tmp/dir').with({
+        'ensure'  => 'directory',
+        'owner'   => 'root',
+        'group'   => 'root',
+        'mode'    => '0777',
+      })
+    }
   end
+
   context 'with mounts specified as an invalid type' do
     let(:params) { { :mounts => ['not','a','hash'] } }
 
