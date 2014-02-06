@@ -1,5 +1,5 @@
 name 'ghoneycutt-types'
-version '1.2.0'
+version '1.3.0'
 source 'git://github.com/ghoneycutt/puppet-module-types.git'
 author 'ghoneycutt'
 license 'Apache License, Version 2.0'
