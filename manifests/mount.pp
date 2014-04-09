@@ -47,4 +47,8 @@ define types::mount (
     target      => $target,
     require     => Common::Mkdir_p[$name],
   }
+  
+  if $fstype == 'nfs' {
+    Mount[$name] -> Service['nfs_service']
+  }
 }
