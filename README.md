@@ -25,17 +25,41 @@ Hash of resource type `cron`.
 
 - *Default*: undef
 
+crons_hiera_merge
+-----------------
+Boolean to control merges of all found instances of types::crons in Hiera. This is useful for specifying cron resources at different levels of the hierarchy and having them all included in the catalog.
+
+This will default to 'true' in future versions.
+
+- *Default*: false
+
 files
 -----
 Hash of resource type `file`.
 
 - *Default*: undef
 
+files_hiera_merge
+-----------------
+Boolean to control merges of all found instances of types::files in Hiera. This is useful for specifying file resources at different levels of the hierarchy and having them all included in the catalog.
+
+This will default to 'true' in future versions.
+
+- *Default*: false
+
 mounts
 ------
 Hash of resource type `mount`.
 
 - *Default*: undef
+
+mounts_hiera_merge
+------------------
+Boolean to control merges of all found instances of types::mounts in Hiera. This is useful for specifying mount resources at different levels of the hierarchy and having them all included in the catalog.
+
+This will default to 'true' in future versions.
+
+- *Default*: false
 
 ===
 
