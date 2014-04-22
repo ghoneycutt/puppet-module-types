@@ -25,6 +25,5 @@ doc/
 .DS_Store
 
 # Puppet
-metadata.json
 coverage/
 spec/fixtures/modules/*
