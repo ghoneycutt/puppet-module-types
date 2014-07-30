@@ -3,12 +3,14 @@
 # Module to manage types
 #
 class types (
-  $crons              = undef,
-  $files              = undef,
-  $mounts             = undef,
-  $crons_hiera_merge  = false,
-  $files_hiera_merge  = false,
-  $mounts_hiera_merge = false,
+  $crons                = undef,
+  $files                = undef,
+  $mounts               = undef,
+  $services             = undef,
+  $crons_hiera_merge    = false,
+  $files_hiera_merge    = false,
+  $mounts_hiera_merge   = false,
+  $services_hiera_merge = true,
 ) {
 
   if type($crons_hiera_merge) == 'string' {
@@ -31,6 +33,13 @@ class types (
     $mounts_hiera_merge_real = $mounts_hiera_merge
   }
   validate_bool($mounts_hiera_merge_real)
+
+  if type($services_hiera_merge) == 'string' {
+    $services_hiera_merge_real = str2bool($services_hiera_merge)
+  } else {
+    $services_hiera_merge_real = $services_hiera_merge
+  }
+  validate_bool($services_hiera_merge_real)
 
   if $crons != undef {
     if $crons_hiera_merge_real == true {
@@ -60,5 +69,15 @@ class types (
     }
     validate_hash($mounts_real)
     create_resources('types::mount',$mounts_real)
+  }
+
+  if $services != undef {
+    if $services_hiera_merge_real == true {
+      $services_real = hiera_hash('types::services')
+    } else {
+      $services_real = $services
+    }
+    validate_hash($services_real)
+    create_resources('types::service',$services_real)
   }
 }

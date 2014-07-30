@@ -238,4 +238,47 @@ describe 'types' do
       }.to raise_error(Puppet::Error)
     end
   end
+
+  context 'with services specified as a hash' do
+    let :params do
+      {
+        :services_hiera_merge => 'false',
+        :services => {
+          'service-stopped' => {
+            'ensure' => 'stopped',
+            'enable' => 'false',
+          },
+          'service-running' => {
+            'ensure' => 'running',
+            'enable' => 'true',
+          }
+        }
+      }
+    end
+
+    it { should contain_class('types') }
+
+    it {
+      should contain_service('service-stopped').with({
+        'ensure' => 'stopped',
+        'enable' => 'false',
+      })
+    }
+    it {
+      should contain_service('service-running').with({
+        'ensure' => 'running',
+        'enable' => 'true',
+      })
+    }
+  end
+
+  context 'with service specified as an invalid type' do
+    let(:params) { { :services => ['not','a','hash'] } }
+
+    it 'should fail' do
+      expect {
+        should contain_class('types')
+      }.to raise_error(Puppet::Error)
+    end
+  end
 end

@@ -61,6 +61,18 @@ This will default to 'true' in future versions.
 
 - *Default*: false
 
+services
+------
+Hash of resource type `service`.
+
+- *Default*: undef
+
+services_hiera_merge
+--------------------
+Boolean to control merges of all found instances of types::services in Hiera. This is useful for specifying file resources at different levels of the hierarchy and having them all included in the catalog.
+
+- *Default*: true
+
 ===
 
 # Defines
@@ -149,6 +161,30 @@ Boolean to mount at boot.
 
 `blockdevice`, `dump`, `options`, `pass`, `provider`, `remounts`, `target`
 
+## `types::service`
+No helper resources are implemented. Simply passes attributes to a service resource.
+
+### mostly used parameters
+
+ensure
+------
+Whether a service should be running.
+
+Valid values are 'stopped', 'false', 'running' and 'true'.
+
+- *Default*: 'running'
+
+enable
+------
+Whether a service should be enabled to start at boot.
+Valid values are 'true', 'false', 'manual'.
+
+- *Default*: 'true'
+
+### Optional parameters. See [type reference](http://docs.puppetlabs.com/references/stable/type.html#service) for more information.
+
+`binary`, `control`, `hasrestart`, `hasstatus`, `manifest`, `path`, `pattern`, `provider`, `restart`, `start`, `status`, `stop`
+
 ===
 
 # Hiera
@@ -190,4 +226,18 @@ types::mounts:
     device: nfsserver:/export/home
     fstype: nfs
     options: rw,rsize=8192,wsize=8192
+</pre>
+
+## service
+<pre>
+types::services:
+  iptables:
+    ensure: 'false'
+    enable: 'false'
+  ip6tables:
+    ensure: 'false'
+    enable: 'false'
+  tailored_firewalls:
+    ensure: 'true'
+    enable: 'true'
 </pre>
