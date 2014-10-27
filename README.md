@@ -17,6 +17,12 @@ This module supports Puppet v3 and Ruby versions 1.8.7, 1.9.3, and 2.0.0.
 
 ===
 
+# Dependencies
+
+This module depends on [puppetlabs/stdlib](https://github.com/puppetlabs/puppetlabs-stdlib) and [ghoneycutt/common](https://github.com/ghoneycutt/puppet-module-common).
+
+===
+
 # Parameters
 
 crons
