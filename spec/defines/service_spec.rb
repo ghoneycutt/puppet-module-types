@@ -6,7 +6,7 @@ describe 'types::service' do
     it {
       should contain_service('service_minimum').with({
         'ensure' => 'running',
-        'enable' => 'true',
+        'enable' => true,
       })
     }
   end
@@ -67,19 +67,40 @@ describe 'types::service' do
     end
   end
 
-  context 'service with invalid enable' do
-    let(:title) { 'invalid' }
-    let(:params) do
-      {
-        :enable  => 'invalid',
-      }
+  describe 'with parameter enable' do
+    ['true',true,'false',false,'manual'].each do |value|
+      context "set to #{value}" do
+        let(:title) { 'my_service' }
+        let(:params) { { :enable  => value } }
+
+        it {
+          should contain_service('my_service').with({
+            'enable' => value,
+          })
+        }
+      end
     end
 
-    it 'should fail' do
-      expect {
-        should contain_class('types')
-      }.to raise_error(Puppet::Error,/types::service::invalid::enable can only be <true>, <false> or <manual> and is set to <invalid>/)
+    context 'set to an invalid string' do
+      let(:title) { 'invalid' }
+      let(:params) { { :enable  => 'invalid' } }
+
+      it 'should fail' do
+        expect {
+          should contain_class('types')
+        }.to raise_error(Puppet::Error,/types::service::invalid::enable can only be <true>, <false> or <manual> and is set to <invalid>/)
+      end
+    end
+
+    context 'set to an invalid type (non-string and non-boolean)' do
+      let(:title) { 'invalid_type' }
+      let(:params) { { :enable  => ['invalid','type'] } }
+
+      it 'should fail' do
+        expect {
+          should contain_class('types')
+        }.to raise_error(Puppet::Error)
+      end
     end
   end
-
 end

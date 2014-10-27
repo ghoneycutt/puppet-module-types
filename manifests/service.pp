@@ -4,7 +4,7 @@ define types::service (
   $ensure      = 'running',
   $binary      = undef,
   $control     = undef,
-  $enable      = 'true',
+  $enable      = true,
   $hasrestart  = undef,
   $hasstatus   = undef,
   $manifest    = undef,
@@ -24,8 +24,12 @@ define types::service (
   }
 
   if $enable != undef {
-    validate_re($enable, '^(true|false|manual)$',
-      "types::service::${name}::enable can only be <true>, <false> or <manual> and is set to <${enable}>")
+    if type($enable) == 'string' {
+      validate_re($enable, '^(true|false|manual)$',
+        "types::service::${name}::enable can only be <true>, <false> or <manual> and is set to <${enable}>")
+    } else {
+      validate_bool($enable)
+    }
   }
 
   service { $name:
