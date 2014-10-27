@@ -13,7 +13,7 @@ You can add any of the supported options for the types in this module. Please se
 
 # Compatibility
 
-This module supports Puppet v3 and Ruby versions 1.8.7, 1.9.3, and 2.0.0.
+This module supports Puppet v3 and Ruby versions 1.8.7, 1.9.3, 2.0.0 and 2.1.0.
 
 ===
 
