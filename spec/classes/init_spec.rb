@@ -170,6 +170,47 @@ describe 'types' do
     }
   end
 
+  context 'with packages specified as a hash' do
+    let(:facts) { { :osfamily => 'RedHat' } }
+    let :params do
+      {
+        :packages_hiera_merge => 'false',
+        :packages => {
+          'pkg1' => {
+            'ensure'      => 'present',
+          },
+          'pkg2' => {
+            'ensure'      => 'absent',
+          },
+          'pkg3' => {
+            'ensure'      => 'latest',
+          },
+        }
+      }
+    end
+
+    it { should contain_class('types') }
+
+    it {
+      should contain_package('pkg1').with({
+        'ensure' => 'present',
+      })
+    }
+
+    it {
+      should contain_package('pkg2').with({
+        'ensure' => 'absent',
+      })
+    }
+
+    it {
+      should contain_package('pkg3').with({
+        'ensure' => 'latest',
+      })
+    }
+
+  end
+
   context 'with mounts specified as an invalid type' do
     let(:params) { { :mounts => ['not','a','hash'] } }
 
@@ -180,6 +221,16 @@ describe 'types' do
     end
   end
 
+  context 'with packages specified as an invalid type' do
+    let(:params) { { :packages => ['not','a','hash'] } }
+
+    it 'should fail' do
+      expect {
+        should contain_class('types')
+      }.to raise_error(Puppet::Error)
+    end
+  end
+  
   context 'with files specified as an invalid type' do
     let(:params) { { :files => ['not','a','hash'] } }
 
