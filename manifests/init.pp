@@ -6,10 +6,12 @@ class types (
   $crons                = undef,
   $files                = undef,
   $mounts               = undef,
+  $packages             = undef,
   $services             = undef,
   $crons_hiera_merge    = false,
   $files_hiera_merge    = false,
   $mounts_hiera_merge   = false,
+  $packages_hiera_merge = true,
   $services_hiera_merge = true,
 ) {
 
@@ -33,6 +35,13 @@ class types (
     $mounts_hiera_merge_real = $mounts_hiera_merge
   }
   validate_bool($mounts_hiera_merge_real)
+
+  if type($packages_hiera_merge) == 'string' {
+    $packages_hiera_merge_real = str2bool($packages_hiera_merge)
+  } else {
+    $packages_hiera_merge_real = $packages_hiera_merge
+  }
+  validate_bool($packages_hiera_merge_real)
 
   if type($services_hiera_merge) == 'string' {
     $services_hiera_merge_real = str2bool($services_hiera_merge)
@@ -69,6 +78,16 @@ class types (
     }
     validate_hash($mounts_real)
     create_resources('types::mount',$mounts_real)
+  }
+
+  if $packages != undef {
+    if $packages_hiera_merge_real == true {
+      $packages_real = hiera_hash('types::packages')
+    } else {
+      $packages_real = $packages
+    }
+    validate_hash($packages_real)
+    create_resources('types::package',$packages_real)
   }
 
   if $services != undef {

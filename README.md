@@ -67,6 +67,18 @@ This will default to 'true' in future versions.
 
 - *Default*: false
 
+packages
+------
+Hash of resource type `package`.
+
+- *Default*: undef
+
+packages_hiera_merge
+------------------
+Boolean to control merges of all found instances of types::packages in Hiera. This is useful for specifying package resources at different levels of the hierarchy and having them all included in the catalog.
+
+- *Default*: true
+
 services
 ------
 Hash of resource type `service`.
@@ -167,6 +179,19 @@ Boolean to mount at boot.
 
 `blockdevice`, `dump`, `options`, `pass`, `provider`, `remounts`, `target`
 
+## `types::package`
+
+### Parameters required or with defaults
+
+ensure
+------
+What state the package should be in.
+ - *Default*: present
+
+### Optional parameters. See type reference for more information.
+
+`adminfile`, `allow_virtual`, `allowcdrom`, `configfiles`, `install_options`, `package_settings`, `provider`, `responsefile`, `source`, `uninstall_options`
+
 ## `types::service`
 No helper resources are implemented. Simply passes attributes to a service resource.
 
@@ -232,6 +257,17 @@ types::mounts:
     device: nfsserver:/export/home
     fstype: nfs
     options: rw,rsize=8192,wsize=8192
+</pre>
+
+## package
+<pre>
+types::packages:
+  package1:
+    ensure: present
+  package2:
+    ensure: absent
+  package3:
+    ensure: latest
 </pre>
 
 ## service
