@@ -16,7 +16,7 @@ describe 'types::package' do
       {
         :ensure            => 'installed',
         :adminfile         => '/path/to/adminfile',
-        :configfiles       => '/path/to/adminfile',
+        :configfiles       => 'keep',
         :install_options   => '--installoption',
         :provider          => 'yum',
         :responsefile      => '/path/to/responsefile',
@@ -30,7 +30,7 @@ describe 'types::package' do
       should contain_package('pkg1').with({
         'ensure'            => 'installed',
         'adminfile'         => '/path/to/adminfile',
-        'configfiles'       => '/path/to/adminfile',
+        'configfiles'       => 'keep',
         'install_options'   => '--installoption',
         'provider'          => 'yum',
         'responsefile'      => '/path/to/responsefile',
@@ -52,6 +52,22 @@ describe 'types::package' do
       expect {
         should contain_class('types')
       }.to raise_error(Puppet::Error,/types::package::invalid::ensure is invalid and does not match the regex./)
+    end
+  end
+
+  context 'package with invalid configfiles' do
+    let(:title) { 'pkg1' }
+    let(:params) do
+      {
+        :configfiles       => 'invalid',
+      }
+    end
+    let(:facts) { { :osfamily => 'RedHat' } }
+
+    it 'should fail' do
+      expect {
+        should contain_class('types')
+      }.to raise_error(Puppet::Error,/types::package::pkg1::configfiles is invalid and does not match the regex./)
     end
   end
 end
