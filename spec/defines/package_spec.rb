@@ -70,4 +70,18 @@ describe 'types::package' do
       }.to raise_error(Puppet::Error,/types::package::pkg1::configfiles is invalid and does not match the regex./)
     end
   end
+
+  context 'package with invalid responsefile' do
+    let(:title) { 'pkg1' }
+    let(:params) do
+      { :responsefile => 'invalid/path' }
+    end
+    let(:facts) { { :osfamily => 'RedHat' } }
+
+    it 'should fail' do
+      expect {
+        should contain_class('types')
+      }.to raise_error(Puppet::Error,/"invalid\/path" is not an absolute path./)
+    end
+  end
 end
