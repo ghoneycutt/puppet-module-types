@@ -2,7 +2,7 @@ name 'ghoneycutt-types'
 version '1.5.1'
 source 'git://github.com/ghoneycutt/puppet-module-types.git'
 author 'ghoneycutt'
-license 'Apache License, Version 2.0'
+license 'Apache-2.0'
 summary 'Puppet module to manage default types through hashes in Hiera'
 description "Puppet module to manage default types through hashes in Hiera with the
 create_resources() function. This module adds validation and helper functions,
