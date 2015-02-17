@@ -40,21 +40,6 @@ describe 'types::package' do
     }
   end
 
-  context 'package with invalid ensure' do
-    let(:title) { 'invalid' }
-    let(:params) do
-      {
-        :ensure  => '!invalid',
-      }
-    end
-
-    it 'should fail' do
-      expect {
-        should contain_class('types')
-      }.to raise_error(Puppet::Error,/types::package::invalid::ensure is invalid and does not match the regex./)
-    end
-  end
-
   context 'package with invalid configfiles' do
     let(:title) { 'pkg1' }
     let(:params) do
@@ -68,6 +53,21 @@ describe 'types::package' do
       expect {
         should contain_class('types')
       }.to raise_error(Puppet::Error,/types::package::pkg1::configfiles is invalid and does not match the regex./)
+    end
+  end
+
+  context 'package with invalid type for ensure' do
+    let(:title) { 'invalidtype' }
+    let(:params) do
+      {
+        :ensure => ['invalid','type'],
+      }
+    end
+
+    it 'should fail' do
+      expect {
+        should contain_class('types')
+      }.to raise_error(Puppet::Error)
     end
   end
 

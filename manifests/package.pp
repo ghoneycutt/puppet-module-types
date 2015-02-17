@@ -12,16 +12,17 @@ define types::package (
   $uninstall_options = undef,
 ) {
 
-  # validate params
-  validate_re($ensure, '^(present)|(installed)|(absent)|(purged)|(held)|(latest)$',
-    "types::package::${name}::ensure is invalid and does not match the regex.")
+  validate_string($ensure)
+
   if $adminfile != undef {
     validate_absolute_path($adminfile)
   }
+
   if $configfiles != undef {
     validate_re($configfiles, '^(keep)|(replace)$',
       "types::package::${name}::configfiles is invalid and does not match the regex.")
   }
+
   if $responsefile != undef {
     validate_absolute_path($responsefile)
   }
