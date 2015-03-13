@@ -24,7 +24,7 @@ define types::service (
   }
 
   if $enable != undef {
-    if type($enable) == 'string' {
+    if is_string($enable) {
       validate_re($enable, '^(true|false|manual)$',
         "types::service::${name}::enable can only be <true>, <false> or <manual> and is set to <${enable}>")
     } else {
