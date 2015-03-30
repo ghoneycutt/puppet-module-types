@@ -15,35 +15,35 @@ class types (
   $services_hiera_merge = true,
 ) {
 
-  if type($crons_hiera_merge) == 'string' {
+  if is_string($crons_hiera_merge) {
     $crons_hiera_merge_real = str2bool($crons_hiera_merge)
   } else {
     $crons_hiera_merge_real = $crons_hiera_merge
   }
   validate_bool($crons_hiera_merge_real)
 
-  if type($files_hiera_merge) == 'string' {
+  if is_string($files_hiera_merge) {
     $files_hiera_merge_real = str2bool($files_hiera_merge)
   } else {
     $files_hiera_merge_real = $files_hiera_merge
   }
   validate_bool($files_hiera_merge_real)
 
-  if type($mounts_hiera_merge) == 'string' {
+  if is_string($mounts_hiera_merge) {
     $mounts_hiera_merge_real = str2bool($mounts_hiera_merge)
   } else {
     $mounts_hiera_merge_real = $mounts_hiera_merge
   }
   validate_bool($mounts_hiera_merge_real)
 
-  if type($packages_hiera_merge) == 'string' {
+  if is_string($packages_hiera_merge) {
     $packages_hiera_merge_real = str2bool($packages_hiera_merge)
   } else {
     $packages_hiera_merge_real = $packages_hiera_merge
   }
   validate_bool($packages_hiera_merge_real)
 
-  if type($services_hiera_merge) == 'string' {
+  if is_string($services_hiera_merge) {
     $services_hiera_merge_real = str2bool($services_hiera_merge)
   } else {
     $services_hiera_merge_real = $services_hiera_merge
