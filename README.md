@@ -39,6 +39,22 @@ This will default to 'true' in future versions.
 
 - *Default*: false
 
+file_lines
+----------
+Hash of resource type `file_line`.
+
+- *Default*: undef
+
+file_lines_hiera_merge
+----------------------
+Boolean to control merges of all found instances of types::file_lines in Hiera.
+This is useful for specifying file_line resources at different levels of the
+hierarchy and having them all included in the catalog.
+
+This will default to 'true' in future versions.
+
+- *Default*: true
+
 files
 -----
 Hash of resource type `file`.
@@ -111,6 +127,29 @@ ensure
 State of cron resource. Valid values are 'present' and 'absent'.
 
 - *Default*: 'present'
+
+## `types::file_line`
+No helper resources are implemented. Simply passes attributes to a file_line resource.
+
+### Parameters required or with defaults
+
+path
+----
+Whether the file should exist, and if so what kind of file it should be. Possible values are 'present', 'absent', 'file', 'directory', and 'link'.
+
+- *Required*
+
+line
+----
+The user to whom the file should belong.
+
+- *Required*
+
+match
+-----
+A regex expressed as a string to replace existing lines.
+
+- *Default*: undef
 
 ## `types::file`
 No helper resources are implemented. Simply passes attributes to a file resource. The path attribute is not used, so the title must be the fully qualified path.
@@ -231,6 +270,15 @@ types::crons:
     command: '/usr/bin/rake -f /usr/share/puppet-dashboard/Rakefile RAILS_ENV=production reports:prune upto=30 unit=day >> /var/log/puppet/dashboard_maintenance.log'
     hour: 0
     minute: 30
+</pre>
+
+## file_line
+<pre>
+types::file_lines:
+  'roots_path':
+    path: '/root/.bash_profile'
+    line: 'PATH=$PATH:/usr/pgsql-9.4/bin/:$HOME/bin'
+    match: '^export PATH'
 </pre>
 
 ## file

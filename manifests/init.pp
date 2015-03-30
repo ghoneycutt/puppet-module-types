@@ -3,16 +3,18 @@
 # Module to manage types
 #
 class types (
-  $crons                = undef,
-  $files                = undef,
-  $mounts               = undef,
-  $packages             = undef,
-  $services             = undef,
-  $crons_hiera_merge    = false,
-  $files_hiera_merge    = false,
-  $mounts_hiera_merge   = false,
-  $packages_hiera_merge = true,
-  $services_hiera_merge = true,
+  $crons                  = undef,
+  $file_lines             = undef,
+  $files                  = undef,
+  $mounts                 = undef,
+  $packages               = undef,
+  $services               = undef,
+  $crons_hiera_merge      = false,
+  $file_lines_hiera_merge = true,
+  $files_hiera_merge      = false,
+  $mounts_hiera_merge     = false,
+  $packages_hiera_merge   = true,
+  $services_hiera_merge   = true,
 ) {
 
   if is_string($crons_hiera_merge) {
@@ -21,6 +23,13 @@ class types (
     $crons_hiera_merge_real = $crons_hiera_merge
   }
   validate_bool($crons_hiera_merge_real)
+
+  if is_string($file_lines_hiera_merge) {
+    $file_lines_hiera_merge_real = str2bool($file_lines_hiera_merge)
+  } else {
+    $file_lines_hiera_merge_real = $file_lines_hiera_merge
+  }
+  validate_bool($file_lines_hiera_merge_real)
 
   if is_string($files_hiera_merge) {
     $files_hiera_merge_real = str2bool($files_hiera_merge)
@@ -58,6 +67,16 @@ class types (
     }
     validate_hash($crons_real)
     create_resources('types::cron',$crons_real)
+  }
+
+  if $file_lines != undef {
+    if $file_lines_hiera_merge_real == true {
+      $file_lines_real = hiera_hash('types::file_lines')
+    } else {
+      $file_lines_real = $file_lines
+    }
+    validate_hash($file_lines_real)
+    create_resources('types::file_line',$file_lines_real)
   }
 
   if $files != undef {
