@@ -64,6 +64,44 @@ describe 'types' do
     }
   end
 
+  context 'with file_lines specified as a hash' do
+    let(:facts) { { :osfamily => 'RedHat' } }
+    let :params do
+      {
+        :file_lines_hiera_merge => 'false',
+        :file_lines => {
+          'some_file' => {
+            'path' => '/tmp/foo',
+            'line' => 'option=asdf',
+          },
+          'some_other_file' => {
+            'path'  => '/tmp/bar',
+            'line'  => 'option=asdf',
+            'match' => '^option',
+          },
+        },
+      }
+    end
+
+    it { should contain_class('types') }
+
+    it {
+      should contain_file_line('some_file').with({
+        'path'  => '/tmp/foo',
+        'line'  => 'option=asdf',
+        'match' => nil,
+      })
+    }
+
+    it {
+      should contain_file_line('some_other_file').with({
+        'path'  => '/tmp/bar',
+        'line'  => 'option=asdf',
+        'match' => '^option',
+      })
+    }
+  end
+
   context 'with files specified as a hash' do
     let(:facts) { { :osfamily => 'RedHat' } }
     let(:params) { { :files => {
@@ -230,7 +268,17 @@ describe 'types' do
       }.to raise_error(Puppet::Error)
     end
   end
-  
+
+  context 'with file_lines specified as an invalid type' do
+    let(:params) { { :file_lines => ['not','a','hash'] } }
+
+    it 'should fail' do
+      expect {
+        should contain_class('types')
+      }.to raise_error(Puppet::Error)
+    end
+  end
+
   context 'with files specified as an invalid type' do
     let(:params) { { :files => ['not','a','hash'] } }
 
