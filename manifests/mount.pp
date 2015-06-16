@@ -19,9 +19,11 @@ define types::mount (
     "types::mount::${name}::ensure is invalid and does not match the regex.")
   validate_absolute_path($name)
 
-  # ensure target exists
-  include common
-  common::mkdir_p { $name: }
+  if $ensure != 'absent' {
+    # ensure target exists
+    include common
+    common::mkdir_p { $name: }
+  }
 
   # Solaris cannot handle 'defaults' as a mount option. A common use case would
   # be to have NFS exports specified in Hiera for multiple systems and if the
@@ -45,6 +47,9 @@ define types::mount (
     provider    => $provider,
     remounts    => $remounts,
     target      => $target,
-    require     => Common::Mkdir_p[$name],
+  }
+
+  if $ensure != 'absent' {
+    Common::Mkdir_p[$name] -> Mount[$name]
   }
 }
