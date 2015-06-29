@@ -34,7 +34,6 @@ describe 'types' do
         'fstype'   => 'iso9660',
         'atboot'   => 'no',
         'remounts' => 'true',
-        'require'  => 'Common::Mkdir_p[/mnt]',
       })
     }
 
@@ -52,7 +51,6 @@ describe 'types' do
         'options'     => 'rw,rsize=8192,wsize=8192',
         'remounts'    => 'true',
         'blockdevice' => '-',
-        'require'  => 'Common::Mkdir_p[/srv/nfs/home]',
       })
     }
 

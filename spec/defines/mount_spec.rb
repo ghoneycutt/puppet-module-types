@@ -1,4 +1,5 @@
 require 'spec_helper'
+
 describe 'types::mount' do
 
   context 'mount with bare minimum specified' do
@@ -72,23 +73,40 @@ describe 'types::mount' do
     end
   end
 
+  describe 'with \'ensure\' parameter set to \'absent\'' do
+    context 'on osfamily RedHat' do
+      let(:title) { '/mnt/test' }
+      let(:params) do
+        { :ensure => 'absent',
+          :device => '/dev/fiction',
+          :fstype => 'iso9660',
+        }
+      end
+      let(:facts) { { :osfamily => 'RedHat' } }
+
+      it {
+        should_not contain_exec('mkdir_p-/mnt/test')
+      }
+    end
+  end
+
   describe 'with \'options\' parameter set to \'defaults\'' do
     context 'on osfamily Solaris' do
       let(:title) { '/mnt' }
       let(:params) do
-        { :device      => '/dev/fiction',
-          :fstype      => 'iso9660',
-          :options     => 'defaults',
+        { :device  => '/dev/fiction',
+          :fstype  => 'iso9660',
+          :options => 'defaults',
         }
       end
       let(:facts) { { :osfamily => 'Solaris' } }
 
       it {
         should contain_mount('/mnt').with({
-          'ensure'      => 'mounted',
-          'device'      => '/dev/fiction',
-          'fstype'      => 'iso9660',
-          'options'     => '-',
+          'ensure'  => 'mounted',
+          'device'  => '/dev/fiction',
+          'fstype'  => 'iso9660',
+          'options' => '-',
         })
       }
     end
