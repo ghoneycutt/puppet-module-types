@@ -52,7 +52,7 @@ describe 'types::package' do
     it 'should fail' do
       expect {
         should contain_class('types')
-      }.to raise_error(Puppet::Error,/types::package::pkg1::configfiles is invalid and does not match the regex./)
+      }.to raise_error(Puppet::Error,/types::package::pkg1::configfiles is invalid and does not match the regex\./)
     end
   end
 
@@ -67,7 +67,7 @@ describe 'types::package' do
     it 'should fail' do
       expect {
         should contain_class('types')
-      }.to raise_error(Puppet::Error)
+      }.to raise_error(Puppet::Error,/\["invalid", "type"\] is not a string\./)
     end
   end
 
@@ -81,7 +81,7 @@ describe 'types::package' do
     it 'should fail' do
       expect {
         should contain_class('types')
-      }.to raise_error(Puppet::Error,/"invalid\/path" is not an absolute path./)
+      }.to raise_error(Puppet::Error,/"invalid\/path" is not an absolute path\./)
     end
   end
 end

@@ -47,7 +47,7 @@ describe 'types::file_line' do
     it 'should fail' do
       expect {
         should contain_class('types')
-      }.to raise_error(Puppet::Error,/^"invalid\/path" is not an absolute path/)
+      }.to raise_error(Puppet::Error,/"invalid\/path" is not an absolute path/)
     end
   end
 
@@ -55,7 +55,7 @@ describe 'types::file_line' do
     context 'for the path parameter' do
       let(:params) do
         {
-          :path  => ['invalid','type'],
+          :path  => true,
           :line  => 'option=asdf',
           :match => '^option',
         }
@@ -64,7 +64,7 @@ describe 'types::file_line' do
       it 'should fail' do
         expect {
           should contain_class('types')
-        }.to raise_error(Puppet::Error,/^\["invalid", "type"\] is not an absolute path/)
+        }.to raise_error(Puppet::Error,/true is not an absolute path/)
       end
     end
 
@@ -80,7 +80,7 @@ describe 'types::file_line' do
       it 'should fail' do
         expect {
           should contain_class('types')
-        }.to raise_error(Puppet::Error,/^\["invalid", "type"\] is not a string/)
+        }.to raise_error(Puppet::Error,/\["invalid", "type"\] is not a string/)
       end
     end
 
@@ -96,7 +96,7 @@ describe 'types::file_line' do
       it 'should fail' do
         expect {
           should contain_class('types')
-        }.to raise_error(Puppet::Error,/^\["invalid", "type"\] is not a string/)
+        }.to raise_error(Puppet::Error,/\["invalid", "type"\] is not a string/)
       end
     end
   end

@@ -99,7 +99,7 @@ describe 'types::service' do
       it 'should fail' do
         expect {
           should contain_class('types')
-        }.to raise_error(Puppet::Error)
+        }.to raise_error(Puppet::Error,/\["invalid", "type"\] is not a boolean\./)
       end
     end
   end

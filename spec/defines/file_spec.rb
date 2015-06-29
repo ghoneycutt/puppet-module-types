@@ -91,7 +91,7 @@ describe 'types::file' do
     it 'should fail' do
       expect {
         should contain_class('types')
-      }.to raise_error(Puppet::Error,/types::file::\/tmp\/foo::ensure is invalid and does not match the regex./)
+      }.to raise_error(Puppet::Error,/types::file::\/tmp\/foo::ensure is invalid and does not match the regex\./)
     end
   end
 
@@ -103,7 +103,7 @@ describe 'types::file' do
         it 'should fail' do
           expect {
             should contain_class('types')
-          }.to raise_error(Puppet::Error,/types::file::\/tmp\/foo::mode must be exactly 4 digits./)
+          }.to raise_error(Puppet::Error,/types::file::\/tmp\/foo::mode must be exactly 4 digits\./)
         end
       end
     end
@@ -115,7 +115,7 @@ describe 'types::file' do
     it 'should fail' do
       expect {
         should contain_class('types')
-      }.to raise_error(Puppet::Error)
+      }.to raise_error(Puppet::Error,/types::file::\/tmp\/foo::ensure is invalid and does not match the regex\./)
     end
   end
 end

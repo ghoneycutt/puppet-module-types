@@ -253,7 +253,7 @@ describe 'types' do
     it 'should fail' do
       expect {
         should contain_class('types')
-      }.to raise_error(Puppet::Error)
+      }.to raise_error(Puppet::Error,/\["not", "a", "hash"\] is not a Hash\./)
     end
   end
 
@@ -283,7 +283,7 @@ describe 'types' do
     it 'should fail' do
       expect {
         should contain_class('types')
-      }.to raise_error(Puppet::Error)
+      }.to raise_error(Puppet::Error,/\["not", "a", "hash"\] is not a Hash\./)
     end
   end
 
@@ -332,7 +332,7 @@ describe 'types' do
     it 'should fail' do
       expect {
         should contain_class('types')
-      }.to raise_error(Puppet::Error)
+      }.to raise_error(Puppet::Error,/\["not", "a", "hash"\] is not a Hash\./)
     end
   end
 
