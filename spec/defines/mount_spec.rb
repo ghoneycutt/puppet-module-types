@@ -69,7 +69,7 @@ describe 'types::mount' do
     it 'should fail' do
       expect {
         should contain_class('types')
-      }.to raise_error(Puppet::Error,/types::mount::invalid::ensure is invalid and does not match the regex./)
+      }.to raise_error(Puppet::Error,/types::mount::invalid::ensure is invalid and does not match the regex\./)
     end
   end
 

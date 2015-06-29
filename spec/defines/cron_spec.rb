@@ -66,7 +66,7 @@ describe 'types::cron' do
     it 'should fail' do
       expect {
         should contain_class('types')
-      }.to raise_error(Puppet::Error,/types::cron::invalid::ensure is invalid and does not match the regex./)
+      }.to raise_error(Puppet::Error,/types::cron::invalid::ensure is invalid and does not match the regex\./)
     end
   end
 end

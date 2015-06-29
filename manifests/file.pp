@@ -4,7 +4,7 @@ define types::file (
   $ensure                  = present,
   $owner                   = root,
   $group                   = root,
-  $mode                    = 0644,
+  $mode                    = '0644',
   $backup                  = undef,
   $checksum                = undef,
   $content                 = undef,
