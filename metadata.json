@@ -1,6 +1,6 @@
 {
   "name": "ghoneycutt-types",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "author": "ghoneycutt",
   "summary": "Puppet module to manage default types through hashes in Hiera",
   "license": "Apache-2.0",
