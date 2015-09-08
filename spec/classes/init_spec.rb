@@ -77,6 +77,11 @@ describe 'types' do
             'line'  => 'option=asdf',
             'match' => '^option',
           },
+          'another_line' => {
+            'ensure' => 'absent',
+            'path'   => '/tmp/bar',
+            'line'   => 'param=x',
+          },
         },
       }
     end
@@ -96,6 +101,14 @@ describe 'types' do
         'path'  => '/tmp/bar',
         'line'  => 'option=asdf',
         'match' => '^option',
+      })
+    }
+
+    it {
+      should contain_file_line('another_line').with({
+        'ensure' => 'absent',
+        'path'   => '/tmp/bar',
+        'line'   => 'param=x',
       })
     }
   end

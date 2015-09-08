@@ -21,16 +21,18 @@ describe 'types::file_line' do
   context 'file_line with all parameters specified' do
     let(:params) do
       {
-        :path  => '/tmp/foo',
-        :line  => 'option=asdf',
-        :match => '^option',
+        :ensure => 'present',
+        :path   => '/tmp/foo',
+        :line   => 'option=asdf',
+        :match  => '^option',
       }
     end
 
     it { should contain_file_line('some_file').with({
-        'path'  => '/tmp/foo',
-        'line'  => 'option=asdf',
-        'match' => '^option',
+        'ensure' => 'present',
+        'path'   => '/tmp/foo',
+        'line'   => 'option=asdf',
+        'match'  => '^option',
       })
     }
   end
@@ -48,6 +50,23 @@ describe 'types::file_line' do
       expect {
         should contain_class('types')
       }.to raise_error(Puppet::Error,/"invalid\/path" is not an absolute path/)
+    end
+  end
+
+  describe 'with an invalid ensure parameter' do
+    let(:params) do
+      {
+        :ensure => '!invalid',
+        :path   => '/tmp/foo',
+        :line   => 'option=asdf',
+        :match  => '^option',
+      }
+    end
+
+    it 'should fail' do
+      expect {
+        should contain_class('types')
+      }.to raise_error(Puppet::Error,/types::file_line::some_file::ensure is invalid and does not match the regex\./)
     end
   end
 
