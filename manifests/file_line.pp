@@ -1,10 +1,10 @@
 # == Define: types::file_line
 #
 define types::file_line (
-  $ensure = 'present',
   $path,
   $line,
   $match  = undef,
+  $ensure = 'present',
 ) {
 
   validate_re($ensure, '^(present)|(absent)$',
