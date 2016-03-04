@@ -3,18 +3,20 @@
 # Module to manage types
 #
 class types (
-  $crons                  = undef,
-  $file_lines             = undef,
-  $files                  = undef,
-  $mounts                 = undef,
-  $packages               = undef,
-  $services               = undef,
-  $crons_hiera_merge      = false,
-  $file_lines_hiera_merge = true,
-  $files_hiera_merge      = false,
-  $mounts_hiera_merge     = false,
-  $packages_hiera_merge   = true,
-  $services_hiera_merge   = true,
+  $crons                   = undef,
+  $file_lines              = undef,
+  $files                   = undef,
+  $mounts                  = undef,
+  $packages                = undef,
+  $services                = undef,
+  $mailaliases             = undef,
+  $crons_hiera_merge       = false,
+  $file_lines_hiera_merge  = true,
+  $files_hiera_merge       = false,
+  $mounts_hiera_merge      = false,
+  $packages_hiera_merge    = true,
+  $services_hiera_merge    = true,
+  $mailaliases_hiera_merge = true,
 ) {
 
   if is_string($crons_hiera_merge) {
@@ -59,6 +61,13 @@ class types (
   }
   validate_bool($services_hiera_merge_real)
 
+  if is_string($mailaliases_hiera_merge) {
+    $mailaliases_hiera_merge_real = str2bool($mailaliases_hiera_merge)
+  } else {
+    $mailaliases_hiera_merge_real = $mailaliases_hiera_merge
+  }
+  validate_bool($mailaliases_hiera_merge_real)
+
   if $crons != undef {
     if $crons_hiera_merge_real == true {
       $crons_real = hiera_hash('types::crons')
@@ -66,7 +75,7 @@ class types (
       $crons_real = $crons
     }
     validate_hash($crons_real)
-    create_resources('types::cron',$crons_real)
+    create_resources('types::cron', $crons_real)
   }
 
   if $file_lines != undef {
@@ -76,7 +85,7 @@ class types (
       $file_lines_real = $file_lines
     }
     validate_hash($file_lines_real)
-    create_resources('types::file_line',$file_lines_real)
+    create_resources('types::file_line', $file_lines_real)
   }
 
   if $files != undef {
@@ -86,7 +95,7 @@ class types (
       $files_real = $files
     }
     validate_hash($files_real)
-    create_resources('types::file',$files_real)
+    create_resources('types::file', $files_real)
   }
 
   if $mounts != undef {
@@ -96,7 +105,7 @@ class types (
       $mounts_real = $mounts
     }
     validate_hash($mounts_real)
-    create_resources('types::mount',$mounts_real)
+    create_resources('types::mount', $mounts_real)
   }
 
   if $packages != undef {
@@ -106,7 +115,7 @@ class types (
       $packages_real = $packages
     }
     validate_hash($packages_real)
-    create_resources('types::package',$packages_real)
+    create_resources('types::package', $packages_real)
   }
 
   if $services != undef {
@@ -116,6 +125,16 @@ class types (
       $services_real = $services
     }
     validate_hash($services_real)
-    create_resources('types::service',$services_real)
+    create_resources('types::service', $services_real)
+  }
+
+  if $mailaliases != undef {
+    if $mailaliases_hiera_merge_real == true {
+      $mailaliases_real = hiera_hash('types::mailaliases')
+    } else {
+      $mailaliases_real = $mailaliases
+    }
+    validate_hash($mailaliases_real)
+    create_resources('types::mailalias', $mailaliases_real)
   }
 }

@@ -85,19 +85,19 @@ This will default to 'true' in future versions.
 - *Default*: false
 
 packages
-------
+--------
 Hash of resource type `package`.
 
 - *Default*: undef
 
 packages_hiera_merge
-------------------
+--------------------
 Boolean to control merges of all found instances of types::packages in Hiera. This is useful for specifying package resources at different levels of the hierarchy and having them all included in the catalog.
 
 - *Default*: true
 
 services
-------
+--------
 Hash of resource type `service`.
 
 - *Default*: undef
@@ -105,6 +105,18 @@ Hash of resource type `service`.
 services_hiera_merge
 --------------------
 Boolean to control merges of all found instances of types::services in Hiera. This is useful for specifying file resources at different levels of the hierarchy and having them all included in the catalog.
+
+- *Default*: true
+
+mailaliases
+-----------
+Hash of resource type `mailalias`.
+
+- *Default*: undef
+
+mailaliases_hiera_merge
+-----------------------
+Boolean to control merges of all found instances of types::mailaliases in Hiera. This is useful for specifying file resources at different levels of the hierarchy and having them all included in the catalog.
 
 - *Default*: true
 
@@ -256,12 +268,46 @@ Valid values are 'true', 'false', 'manual'.
 
 `binary`, `control`, `hasrestart`, `hasstatus`, `manifest`, `path`, `pattern`, `provider`, `restart`, `start`, `status`, `stop`
 
+## `types::mailalias`
+No helper resources are implemented. Simply passes attributes to a mailalias resource.
+
+### mostly used parameters
+
+ensure
+------
+Whether a service should be running.
+
+Valid values are 'present' and 'absent'.
+
+- *Default*: 'present'
+
+provider
+--------
+Whether a service should be enabled to start at boot.
+Valid values are 'true', 'false', 'manual'.
+
+- *Default*: 'aliases'
+
+recipient
+---------
+Whether a service should be enabled to start at boot.
+Valid values are 'true', 'false', 'manual'.
+
+- *Default*: 'MANDATORY'
+
+target
+------
+Whether a service should be enabled to start at boot.
+Valid values are 'true', 'false', 'manual'.
+
+- *Default*: '/etc/aliases'
+
 ===
 
 # Hiera
 
 ## cron
-<pre>
+```
 types::crons:
   'clean puppet filebucket':
     command: '/usr/bin/find /var/lib/puppet/clientbucket/ -type f -mtime +30 -exec /bin/rm -fr {} \;'
@@ -271,19 +317,19 @@ types::crons:
     command: '/usr/bin/rake -f /usr/share/puppet-dashboard/Rakefile RAILS_ENV=production reports:prune upto=30 unit=day >> /var/log/puppet/dashboard_maintenance.log'
     hour: 0
     minute: 30
-</pre>
+```
 
 ## file_line
-<pre>
+```
 types::file_lines:
   'roots_path':
     path: '/root/.bash_profile'
     line: 'PATH=$PATH:/usr/pgsql-9.4/bin/:$HOME/bin'
     match: '^export PATH'
-</pre>
+```
 
 ## file
-<pre>
+```
 types::files:
   '/tmp/foo':
     ensure: 'file'
@@ -292,10 +338,10 @@ types::files:
   '/tmp/link':
     ensure: 'link'
     target: '/tmp/foo'
-</pre>
+```
 
 ## mount
-<pre>
+```
 types::mounts:
   /mnt:
     device: /dev/dvd
@@ -306,10 +352,10 @@ types::mounts:
     device: nfsserver:/export/home
     fstype: nfs
     options: rw,rsize=8192,wsize=8192
-</pre>
+```
 
 ## package
-<pre>
+```
 types::packages:
   package1:
     ensure: present
@@ -317,10 +363,10 @@ types::packages:
     ensure: absent
   package3:
     ensure: latest
-</pre>
+```
 
 ## service
-<pre>
+```
 types::services:
   iptables:
     ensure: 'false'
@@ -331,4 +377,18 @@ types::services:
   tailored_firewalls:
     ensure: 'true'
     enable: 'true'
-</pre>
+```
+
+## mailalias
+```
+types::mailaliases:
+  user1:
+    ensure: 'present'
+    recipient: 'user1@example.com'
+  user2:
+    ensure: 'present'
+    recipient: 'user2@example.com'
+  user3:
+    ensure: 'present'
+    recipient: 'user3@example.com'
+```

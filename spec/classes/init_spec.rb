@@ -391,4 +391,59 @@ describe 'types' do
       }.to raise_error(Puppet::Error)
     end
   end
+
+  context 'with mailalias specified as a hash' do
+    let :params do
+      {
+        :mailaliases_hiera_merge => 'false',
+        :mailaliases => {
+          'user1' => {
+            'recipient' => 'user1@example.com',
+          },
+          'user2' => {
+            'recipient' => 'user2@example.com',
+          },
+          'user3' => {
+            'recipient' => 'user3@example.com',
+          }
+        }
+      }
+    end
+
+    it { should contain_class('types') }
+
+    it {
+      should contain_mailalias('user1').with({
+        'ensure'    => 'present',
+        'recipient' => 'user1@example.com',
+      })
+    }
+    it {
+      should contain_mailalias('user2').with({
+        'ensure'    => 'present',
+        'recipient' => 'user2@example.com',
+      })
+    }
+    it {
+      should contain_mailalias('user3').with({
+        'ensure'    => 'present',
+        'recipient' => 'user3@example.com',
+      })
+    }
+  end
+
+  context 'with mailalias specified as an invalid type' do
+    let :params do
+      {
+        :mailaliases_hiera_merge => 'false',
+        :mailaliases => ['not','a','hash']
+      }
+    end
+
+    it 'should fail' do
+      expect {
+        should contain_class('types')
+      }.to raise_error(Puppet::Error,/\["not", "a", "hash"\] is not a Hash\./)
+    end
+  end
 end
