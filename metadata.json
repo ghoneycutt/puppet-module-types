@@ -52,6 +52,6 @@
   "description": "Puppet module to manage default types through hashes in Hiera with the\ncreate_resources() function. This module adds validation and helper functions,\nsuch as ensuring directories. Without specifying any hashes, this module will take no action.",
   "dependencies": [
     {"name":"puppetlabs/stdlib","version_requirement":">= 4.6.0 < 6.0.0"},
-    {"name":"ghoneycutt/common","version_requirement":">= 1.0.2 < 2.0.0"}
+    {"name":"ghoneycutt/common","version_requirement":">= 1.6.0 < 2.0.0"}
   ]
 }
