@@ -3,18 +3,20 @@
 # Module to manage types
 #
 class types (
-  $crons                  = undef,
-  $file_lines             = undef,
-  $files                  = undef,
-  $mounts                 = undef,
-  $packages               = undef,
-  $services               = undef,
-  $crons_hiera_merge      = false,
-  $file_lines_hiera_merge = true,
-  $files_hiera_merge      = false,
-  $mounts_hiera_merge     = false,
-  $packages_hiera_merge   = true,
-  $services_hiera_merge   = true,
+  $crons                   = undef,
+  $file_lines              = undef,
+  $files                   = undef,
+  $mounts                  = undef,
+  $packages                = undef,
+  $selbooleans             = undef,
+  $services                = undef,
+  $crons_hiera_merge       = false,
+  $file_lines_hiera_merge  = true,
+  $files_hiera_merge       = false,
+  $mounts_hiera_merge      = false,
+  $packages_hiera_merge    = true,
+  $selbooleans_hiera_merge = true,
+  $services_hiera_merge    = true,
 ) {
 
   if is_string($crons_hiera_merge) {
@@ -51,6 +53,13 @@ class types (
     $packages_hiera_merge_real = $packages_hiera_merge
   }
   validate_bool($packages_hiera_merge_real)
+
+  if is_string($selbooleans_hiera_merge) {
+    $selbooleans_hiera_merge_real = str2bool($selbooleans_hiera_merge)
+  } else {
+    $selbooleans_hiera_merge_real = $selbooleans_hiera_merge
+  }
+  validate_bool($selbooleans_hiera_merge_real)
 
   if is_string($services_hiera_merge) {
     $services_hiera_merge_real = str2bool($services_hiera_merge)
@@ -107,6 +116,16 @@ class types (
     }
     validate_hash($packages_real)
     create_resources('types::package',$packages_real)
+  }
+
+  if $selbooleans != undef {
+    if $selbooleans_hiera_merge_real == true {
+      $selbooleans_real = hiera_hash('types::selboolean')
+    } else {
+      $selbooleans_real = $selbooleans
+    }
+    validate_hash($selbooleans_real)
+    create_resources('types::selboolean',$selbooleans_real)
   }
 
   if $services != undef {
