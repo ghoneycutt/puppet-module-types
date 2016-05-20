@@ -3,9 +3,16 @@
 
 Puppet module to manage default types through hashes in Hiera with the
 create_resources() function. This module adds validation and helper functions,
-such as ensuring directories. Without specifying any hashes, this module will take no action.
+such as ensuring directories. Without specifying any hashes, this module will
+take no action.
 
-You can add any of the supported options for the types in this module. Please see the Puppet Labs [Type Reference](http://docs.puppetlabs.com/references/stable/type.html) for more information.
+To use, simply `include ::types` and start specifying hashes of types in Hiera
+as shown below.
+
+You can add any of the supported options for the types in this module. Please
+see the Puppet Labs
+[Type Reference](http://docs.puppetlabs.com/references/stable/type.html) for
+more information.
 
 [![Build Status](https://api.travis-ci.org/ghoneycutt/puppet-module-types.png?branch=master)](https://travis-ci.org/ghoneycutt/puppet-module-types)
 
@@ -14,7 +21,7 @@ You can add any of the supported options for the types in this module. Please se
 # Compatibility
 
 This module supports Puppet v3 >= 3.2.0 (with and without the future parser)
-and Puppet v4 with Ruby versions 1.8.7, 1.9.3, 2.0.0 and 2.1.0.
+and Puppet v4 with Ruby versions 1.8.7 (Puppet v3 only), 1.9.3, 2.0.0 and 2.1.0.
 
 ===
 
