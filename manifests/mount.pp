@@ -21,7 +21,7 @@ define types::mount (
 
   if $ensure != 'absent' {
     # ensure target exists
-    include common
+    include ::common
     common::mkdir_p { $name: }
   }
 
