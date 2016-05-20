@@ -1,3 +1,6 @@
+### v1.10.0 (2016-05-20)
+  * Add support for selboolean's
+
 ### v1.9.1 (2016-05-20)
   * Upgrade dependency for ghoneycutt/common to 1.6.0
   * Support Puppet v4 w/ strict variable checking
