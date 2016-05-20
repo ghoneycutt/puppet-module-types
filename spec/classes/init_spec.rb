@@ -260,6 +260,48 @@ describe 'types' do
 
   end
 
+  context 'with selboolean specified as a hash' do
+    let(:facts) { { :osfamily => 'RedHat' } }
+    let :params do
+      {
+        :selbooleans_hiera_merge => 'false',
+        :selbooleans => {
+          'nfs_export_all_ro' => {
+            'value' => 'on',
+          },
+          'nfs_export_all_rw' => {
+            'persistent' => true,
+            'value'      => 'on',
+          },
+        }
+      }
+    end
+
+    it { should contain_class('types') }
+    it {
+      should contain_selboolean('nfs_export_all_ro').with({
+        'value' => 'on',
+      })
+    }
+    it {
+      should contain_selboolean('nfs_export_all_rw').with({
+        'persistent' => true,
+        'value'      => 'on',
+      })
+    }
+  end
+
+  context 'with selboolean specified as an invalid type' do
+    let(:facts) { { :osfamily => 'RedHat' } }
+    let(:params) { { :selbooleans => ['not','a','hash'] } }
+
+    it 'should fail' do
+      expect {
+        should contain_class('types')
+      }.to raise_error(Puppet::Error)
+    end
+  end
+
   context 'with mounts specified as an invalid type' do
     let(:params) { { :mounts => ['not','a','hash'] } }
 

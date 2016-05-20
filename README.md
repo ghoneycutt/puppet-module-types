@@ -92,19 +92,31 @@ This will default to 'true' in future versions.
 - *Default*: false
 
 packages
-------
+--------
 Hash of resource type `package`.
 
 - *Default*: undef
 
 packages_hiera_merge
-------------------
+--------------------
 Boolean to control merges of all found instances of types::packages in Hiera. This is useful for specifying package resources at different levels of the hierarchy and having them all included in the catalog.
 
 - *Default*: true
 
+selbooleans
+-----------
+Hash of resource type `selboolean`.
+
+- *Default*: undef
+
+selbooleans_hiera_merge
+-----------------------
+Boolean to control merges of all found instances of types::selboolean in Hiera. This is useful for specifying selboolean resources at different levels of the hierarchy and having them all included in the catalog.
+
+- *Default*: true
+
 services
-------
+--------
 Hash of resource type `service`.
 
 - *Default*: undef
@@ -324,6 +336,16 @@ types::packages:
     ensure: absent
   package3:
     ensure: latest
+</pre>
+
+## selboolean
+<pre>
+types::selboolean:
+  nfs_export_all_ro:
+    value: on
+    persistent: true
+  nfs_export_all_rw:
+    value: on
 </pre>
 
 ## service
