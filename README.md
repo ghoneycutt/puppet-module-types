@@ -20,8 +20,9 @@ more information.
 
 # Compatibility
 
-This module supports Puppet v3 >= 3.2.0 (with and without the future parser)
-and Puppet v4 with Ruby versions 1.8.7 (Puppet v3 only), 1.9.3, 2.0.0 and 2.1.0.
+This module supports Puppet v3 >= 3.2.0 (with and without the future
+parser) and Puppet v4 with Ruby versions 1.8.7, 1.9.3,
+2.0.0, 2.1.0 and 2.3.1. Please see .travis.yml for the full matrix.
 
 ===
 
