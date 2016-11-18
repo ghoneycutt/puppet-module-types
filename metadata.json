@@ -3,19 +3,17 @@
   "version": "1.10.0",
   "author": "ghoneycutt",
   "summary": "Puppet module to manage default types through hashes in Hiera",
+  "description": "Puppet module to manage default types through hashes in Hiera with the\ncreate_resources() function. This module adds validation and helper functions,\nsuch as ensuring directories. Without specifying any hashes, this module will take no action.",
   "license": "Apache-2.0",
   "source": "git://github.com/ghoneycutt/puppet-module-types.git",
   "project_page": "https://github.com/ghoneycutt/puppet-module-types",
   "issues_url": "https://github.com/ghoneycutt/puppet-module-types/issues",
   "requirements": [
-    {
-      "name": "pe",
-      "version_requirement": ">= 3.2.0 < 5.0.0"
-    },
-    {
-      "name": "puppet",
-      "version_requirement": ">= 3.2.0 < 5.0.0"
-    }
+    {"name":"puppet","version_requirement":">= 3.2.0 < 5.0.0"}
+  ],
+  "dependencies": [
+    {"name":"puppetlabs/stdlib","version_requirement":">= 4.6.0 < 6.0.0"},
+    {"name":"ghoneycutt/common","version_requirement":">= 1.7.0 < 2.0.0"}
   ],
   "operatingsystem_support": [
     {
@@ -48,10 +46,5 @@
     {
       "operatingsystem": "Ubuntu"
     }
-  ],
-  "description": "Puppet module to manage default types through hashes in Hiera with the\ncreate_resources() function. This module adds validation and helper functions,\nsuch as ensuring directories. Without specifying any hashes, this module will take no action.",
-  "dependencies": [
-    {"name":"puppetlabs/stdlib","version_requirement":">= 4.6.0 < 6.0.0"},
-    {"name":"ghoneycutt/common","version_requirement":">= 1.6.0 < 2.0.0"}
   ]
 }
