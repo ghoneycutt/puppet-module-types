@@ -1,6 +1,6 @@
 {
   "name": "ghoneycutt-types",
-  "version": "v1.11.0",
+  "version": "1.11.1",
   "author": "ghoneycutt",
   "summary": "Puppet module to manage default types through hashes in Hiera",
   "description": "Puppet module to manage default types through hashes in Hiera with the\ncreate_resources() function. This module adds validation and helper functions,\nsuch as ensuring directories. Without specifying any hashes, this module will take no action.",

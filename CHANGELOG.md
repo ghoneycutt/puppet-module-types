@@ -1,3 +1,6 @@
+### v1.11.1 (2016-11-17)
+  * Fix bug in metadata
+
 ### v1.11.0 (2016-11-17)
   * Add support for Ruby 2.3.1
 
