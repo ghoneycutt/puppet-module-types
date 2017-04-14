@@ -52,4 +52,8 @@ define types::mount (
   if $ensure != 'absent' {
     Common::Mkdir_p[$name] -> Mount[$name]
   }
+  
+  if $fstype == 'nfs' {
+    Mount[$name] -> Service['nfs_service']
+  }
 }
