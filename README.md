@@ -48,6 +48,20 @@ This will default to 'true' in future versions.
 
 - *Default*: false
 
+execs
+-----
+Hash of resource type `exec`.
+
+- *Default*: undef
+
+execs_hiera_merge
+-----------------
+Boolean to control merges of all found instances of types::execs in Hiera. This is useful for specifying exec resources at different levels of the hierarchy and having them all included in the catalog.
+
+This will default to 'true' in future versions.
+
+- *Default*: false
+
 file_lines
 ----------
 Hash of resource type `file_line`.
@@ -148,6 +162,40 @@ ensure
 State of cron resource. Valid values are 'present' and 'absent'.
 
 - *Default*: 'present'
+
+## `types::exec`
+No helper resources are implemented. Simply passes attributes to a exec resource.
+
+### Parameters required
+
+command
+-------
+The command to execute.
+
+- *Required*
+
+creates
+--------
+A file to look for before running the command. The command will only run if the file doesn’t exist. Needs to be an absolute path.
+
+- *Default*: undef
+
+cwd
+---
+The directory from which to run the command. Needs to be an absolute path.
+
+- *Default*: undef
+
+provider
+--------
+Backend to use for the exec resource. Usually not needed to set. Possible values are 'posix', 'shell', and 'windows'.
+
+- *Default*: undef
+
+### Optional parameters. See [type exec reference](https://docs.puppet.com/puppet/latest/type.html#exec) for more information.
+
+`environment`, `group`, `logoutput`, `onlyif`, `path`, `refresh`, `refreshonly`, `returns`, `timeout`,`tries`, `try_sleep`, `unless`, and `user`
+
 
 ## `types::file_line`
 No helper resources are implemented. Simply passes attributes to a file_line resource.
@@ -291,6 +339,19 @@ types::crons:
     command: '/usr/bin/rake -f /usr/share/puppet-dashboard/Rakefile RAILS_ENV=production reports:prune upto=30 unit=day >> /var/log/puppet/dashboard_maintenance.log'
     hour: 0
     minute: 30
+</pre>
+
+## exec
+<pre>
+types::execs:
+  'run script1 as user with an environment variable set and returns 242':
+    command: '/opt/script1.sh'
+    user: 'user'
+    environment: 'interactive=false'
+    returns: '242'
+  'run script2 when no log file is present yet':
+    command: '/opt/script2.sh'
+    creates: '/opt/script.log'
 </pre>
 
 ## file_line
