@@ -391,6 +391,67 @@ describe 'types' do
     end
   end
 
+  context 'with exec specified as a hash' do
+    let(:facts) { { :osfamily => 'RedHat' } }
+    let(:params) do
+      {
+        :execs => {
+          'exec-1' => {
+            'command'     => '/usr/local/bin/some-script.sh',
+            'creates'     => '/tmp/touch',
+            'cwd'         => '/tmp',
+            'environment' => 'var=value',
+            'group'       => 'group-1',
+            'logoutput'   => true,
+            'onlyif'      => '/onlyif.sh',
+            'path'        => '/tmp',
+            'provider'    => 'shell',
+          },
+          'exec-2' => {
+            'command'     => '/usr/local/bin/script.sh',
+            'refresh'     => '/refresh.sh',
+            'refreshonly' => true,
+            'returns'     => 242,
+            'timeout'     => 3,
+            'tries'       => 3,
+            'try_sleep'   => 3,
+            'unless'      => '/unless.sh',
+            'user'        => 'tester',
+          }
+        }
+      }
+    end
+
+    it { should contain_class('types') }
+
+    it do
+      should contain_types__exec('exec-1').with({
+        'command'     => '/usr/local/bin/some-script.sh',
+        'creates'     => '/tmp/touch',
+        'cwd'         => '/tmp',
+        'environment' => 'var=value',
+        'group'       => 'group-1',
+        'logoutput'   => true,
+        'onlyif'      => '/onlyif.sh',
+        'path'        => '/tmp',
+        'provider'    => 'shell',
+      })
+    end
+    it {
+      should contain_types__exec('exec-2').with({
+        'command'     => '/usr/local/bin/script.sh',
+        'refresh'     => '/refresh.sh',
+        'refreshonly' => true,
+        'returns'     => 242,
+        'timeout'     => 3,
+        'tries'       => 3,
+        'try_sleep'   => 3,
+        'unless'      => '/unless.sh',
+        'user'        => 'tester',
+      })
+    }
+  end
+
   context 'with services specified as a hash' do
     let :params do
       {

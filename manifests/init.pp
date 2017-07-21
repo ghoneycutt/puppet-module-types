@@ -4,6 +4,7 @@
 #
 class types (
   $crons                   = undef,
+  $execs                   = undef,
   $file_lines              = undef,
   $files                   = undef,
   $mounts                  = undef,
@@ -11,6 +12,7 @@ class types (
   $selbooleans             = undef,
   $services                = undef,
   $crons_hiera_merge       = false,
+  $execs_hiera_merge       = false,
   $file_lines_hiera_merge  = true,
   $files_hiera_merge       = false,
   $mounts_hiera_merge      = false,
@@ -25,6 +27,8 @@ class types (
     $crons_hiera_merge_real = $crons_hiera_merge
   }
   validate_bool($crons_hiera_merge_real)
+
+  $execs_hiera_merge_bool = str2bool($execs_hiera_merge)
 
   if is_string($file_lines_hiera_merge) {
     $file_lines_hiera_merge_real = str2bool($file_lines_hiera_merge)
@@ -76,6 +80,16 @@ class types (
     }
     validate_hash($crons_real)
     create_resources('types::cron',$crons_real)
+  }
+
+  if $execs != undef {
+    if $execs_hiera_merge_bool == true {
+      $execs_real = hiera_hash('types::execs')
+    } else {
+      $execs_real = $execs
+    }
+    validate_hash($execs_real)
+    create_resources('types::exec',$execs_real)
   }
 
   if $file_lines != undef {
