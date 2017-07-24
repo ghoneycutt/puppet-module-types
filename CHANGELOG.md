@@ -1,3 +1,6 @@
+### v1.12.0 (2017-07-24)
+  * Add ability to manage the exec resource.
+
 ### v1.11.1 (2016-11-17)
   * Fix bug in metadata
 
