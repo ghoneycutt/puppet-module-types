@@ -1,3 +1,6 @@
+### v1.13.0 (2019-01-03)
+  * Support Puppet 5 and 6
+
 ### v1.12.0 (2017-07-24)
   * Add ability to manage the exec resource.
 
