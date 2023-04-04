@@ -1,58 +1,62 @@
 require 'spec_helper'
 describe 'types::package' do
-
   context 'package with bare minimum specified' do
     let(:title) { 'pkg1' }
-    it {
-      should contain_package('pkg1').with({
-        'ensure'  => 'present',
-      })
-    }
+
+    it do
+      is_expected.to contain_package('pkg1').with(
+        {
+          'ensure' => 'present',
+        },
+      )
+    end
   end
 
   context 'package with all options specified' do
     let(:title) { 'pkg1' }
     let(:params) do
       {
-        :ensure            => 'installed',
-        :adminfile         => '/path/to/adminfile',
-        :configfiles       => 'keep',
-        :install_options   => '--installoption',
-        :provider          => 'yum',
-        :responsefile      => '/path/to/responsefile',
-        :source            => 'http://source/URL/',
-        :uninstall_options => '--uninstall_option',
+        ensure: 'installed',
+        adminfile: '/path/to/adminfile',
+        configfiles: 'keep',
+        install_options: '--installoption',
+        provider: 'yum',
+        responsefile: '/path/to/responsefile',
+        source: 'http://source/URL/',
+        uninstall_options: '--uninstall_option',
       }
     end
-    let(:facts) { { :osfamily => 'RedHat' } }
+    let(:facts) { { osfamily: 'RedHat' } }
 
-    it {
-      should contain_package('pkg1').with({
-        'ensure'            => 'installed',
-        'adminfile'         => '/path/to/adminfile',
-        'configfiles'       => 'keep',
-        'install_options'   => '--installoption',
-        'provider'          => 'yum',
-        'responsefile'      => '/path/to/responsefile',
-        'source'            => 'http://source/URL/',
-        'uninstall_options' => '--uninstall_option',
-      })
-    }
+    it do
+      is_expected.to contain_package('pkg1').with(
+        {
+          'ensure'            => 'installed',
+          'adminfile'         => '/path/to/adminfile',
+          'configfiles'       => 'keep',
+          'install_options'   => '--installoption',
+          'provider'          => 'yum',
+          'responsefile'      => '/path/to/responsefile',
+          'source'            => 'http://source/URL/',
+          'uninstall_options' => '--uninstall_option',
+        },
+      )
+    end
   end
 
   context 'package with invalid configfiles' do
     let(:title) { 'pkg1' }
     let(:params) do
       {
-        :configfiles       => 'invalid',
+        configfiles: 'invalid',
       }
     end
-    let(:facts) { { :osfamily => 'RedHat' } }
+    let(:facts) { { osfamily: 'RedHat' } }
 
-    it 'should fail' do
+    it 'fails' do
       expect {
-        should contain_class('types')
-      }.to raise_error(Puppet::Error,/types::package::pkg1::configfiles is invalid and does not match the regex\./)
+        is_expected.to contain_class('types')
+      }.to raise_error(Puppet::Error, %r{types::package::pkg1::configfiles is invalid and does not match the regex\.})
     end
   end
 
@@ -60,28 +64,30 @@ describe 'types::package' do
     let(:title) { 'invalidtype' }
     let(:params) do
       {
-        :ensure => ['invalid','type'],
+        ensure: ['invalid', 'type'],
       }
     end
 
-    it 'should fail' do
+    it 'fails' do
       expect {
-        should contain_class('types')
-      }.to raise_error(Puppet::Error,/\["invalid", "type"\] is not a string\./)
+        is_expected.to contain_class('types')
+      }.to raise_error(Puppet::Error, %r{\["invalid", "type"\] is not a string\.})
     end
   end
 
   context 'package with invalid responsefile' do
     let(:title) { 'pkg1' }
     let(:params) do
-      { :responsefile => 'invalid/path' }
+      {
+        responsefile: 'invalid/path'
+      }
     end
-    let(:facts) { { :osfamily => 'RedHat' } }
+    let(:facts) { { osfamily: 'RedHat' } }
 
-    it 'should fail' do
+    it 'fails' do
       expect {
-        should contain_class('types')
-      }.to raise_error(Puppet::Error,/"invalid\/path" is not an absolute path\./)
+        is_expected.to contain_class('types')
+      }.to raise_error(Puppet::Error, %r{"invalid/path" is not an absolute path\.})
     end
   end
 end
