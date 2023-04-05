@@ -6,9 +6,7 @@ define types::file_line (
   $match  = undef,
   $ensure = 'present',
 ) {
-
-  validate_re($ensure, '^(present)|(absent)$',
-    "types::file_line::${name}::ensure is invalid and does not match the regex.")
+  validate_re($ensure, '^(present)|(absent)$', "types::file_line::${name}::ensure is invalid and does not match the regex.")
   validate_absolute_path($path)
   validate_string($line)
 

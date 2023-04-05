@@ -16,17 +16,14 @@ define types::service (
   $status      = undef,
   $stop        = undef,
 ) {
-
   # validate params
   if $ensure != undef {
-    validate_re($ensure, '^(stopped|false|running|true)$',
-      "types::service::${name}::ensure can only be <stopped>, <false>, <running> or <true> and is set to <${ensure}>")
+    validate_re($ensure, '^(stopped|false|running|true)$', "types::service::${name}::ensure can only be <stopped>, <false>, <running> or <true> and is set to <${ensure}>")
   }
 
   if $enable != undef {
     if is_string($enable) {
-      validate_re($enable, '^(true|false|manual)$',
-        "types::service::${name}::enable can only be <true>, <false> or <manual> and is set to <${enable}>")
+      validate_re($enable, '^(true|false|manual)$', "types::service::${name}::enable can only be <true>, <false> or <manual> and is set to <${enable}>")
     } else {
       validate_bool($enable)
     }

@@ -26,10 +26,8 @@ define types::file (
   $sourceselect            = undef,
   $target                  = undef,
 ) {
-
   # validate params
-  validate_re($ensure, '^(present)|(absent)|(file)|(directory)|(link)$',
-    "types::file::${name}::ensure is invalid and does not match the regex.")
+  validate_re($ensure, '^(present)|(absent)|(file)|(directory)|(link)$', "types::file::${name}::ensure is invalid and does not match the regex.")
   validate_absolute_path($name)
   validate_re($mode, '^\d{4}$', "types::file::${name}::mode must be exactly 4 digits.")
 

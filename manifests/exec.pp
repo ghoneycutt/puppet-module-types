@@ -19,7 +19,6 @@ define types::exec (
   $unless      = undef,
   $user        = undef,
 ) {
-
   # validate params
   if $creates != undef {
     validate_absolute_path($creates)
@@ -28,8 +27,7 @@ define types::exec (
     validate_absolute_path($cwd)
   }
   if $provider != undef {
-    validate_re($provider, '^(posix|shell|windows)$',
-      "types::exec::${name}::provider is invalid and does not match the regex.")
+    validate_re($provider, '^(posix|shell|windows)$', "types::exec::${name}::provider is invalid and does not match the regex.")
   }
 
   exec { $name:

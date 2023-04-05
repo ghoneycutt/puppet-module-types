@@ -14,10 +14,8 @@ define types::cron (
   $user        = undef,
   $weekday     = undef,
 ) {
-
   # validate params
-  validate_re($ensure, '^(present)|(absent)$',
-    "types::cron::${name}::ensure is invalid and does not match the regex.")
+  validate_re($ensure, '^(present)|(absent)$', "types::cron::${name}::ensure is invalid and does not match the regex.")
 
   cron { $name:
     ensure      => $ensure,

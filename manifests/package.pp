@@ -11,7 +11,6 @@ define types::package (
   $source            = undef,
   $uninstall_options = undef,
 ) {
-
   validate_string($ensure)
 
   if $adminfile != undef {
@@ -19,8 +18,7 @@ define types::package (
   }
 
   if $configfiles != undef {
-    validate_re($configfiles, '^(keep)|(replace)$',
-      "types::package::${name}::configfiles is invalid and does not match the regex.")
+    validate_re($configfiles, '^(keep)|(replace)$', "types::package::${name}::configfiles is invalid and does not match the regex.")
   }
 
   if $responsefile != undef {

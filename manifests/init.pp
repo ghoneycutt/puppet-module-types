@@ -20,7 +20,6 @@ class types (
   $selbooleans_hiera_merge = true,
   $services_hiera_merge    = true,
 ) {
-
   if is_string($crons_hiera_merge) {
     $crons_hiera_merge_real = str2bool($crons_hiera_merge)
   } else {
