@@ -16,13 +16,13 @@ describe 'types::package' do
     let(:title) { 'pkg1' }
     let(:params) do
       {
-        ensure: 'installed',
-        adminfile: '/path/to/adminfile',
-        configfiles: 'keep',
-        install_options: '--installoption',
-        provider: 'yum',
-        responsefile: '/path/to/responsefile',
-        source: 'http://source/URL/',
+        ensure:            'installed',
+        adminfile:         '/path/to/adminfile',
+        configfiles:       'keep',
+        install_options:   '--installoption',
+        provider:          'yum',
+        responsefile:      '/path/to/responsefile',
+        source:            'http://source/URL/',
         uninstall_options: '--uninstall_option',
       }
     end
@@ -56,7 +56,7 @@ describe 'types::package' do
     it 'fails' do
       expect {
         is_expected.to contain_class('types')
-      }.to raise_error(Puppet::Error, %r{types::package::pkg1::configfiles is invalid and does not match the regex\.})
+      }.to raise_error(Puppet::Error, %r{expects an undef value or a match for Enum})
     end
   end
 
@@ -71,7 +71,7 @@ describe 'types::package' do
     it 'fails' do
       expect {
         is_expected.to contain_class('types')
-      }.to raise_error(Puppet::Error, %r{\["invalid", "type"\] is not a string\.})
+      }.to raise_error(Puppet::Error, %r{expects a match for Enum})
     end
   end
 
@@ -87,7 +87,7 @@ describe 'types::package' do
     it 'fails' do
       expect {
         is_expected.to contain_class('types')
-      }.to raise_error(Puppet::Error, %r{"invalid/path" is not an absolute path\.})
+      }.to raise_error(Puppet::Error, %r{expects a Stdlib::Absolutepath})
     end
   end
 end

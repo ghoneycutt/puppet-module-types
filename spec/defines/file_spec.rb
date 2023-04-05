@@ -7,9 +7,9 @@ describe 'types::file' do
       is_expected.to contain_file('/tmp/foo').with(
         {
           'ensure' => 'present',
-          'owner'   => 'root',
-          'group'   => 'root',
-          'mode'    => '0644',
+          'owner'  => 'root',
+          'group'  => 'root',
+          'mode'   => '0644',
         },
       )
     end
@@ -18,29 +18,29 @@ describe 'types::file' do
   context 'file with all options specified' do
     let(:params) do
       {
-        ensure: 'present',
-        mode: '0777',
-        owner: 'root',
-        group: 'root',
-        content: 'This is the content',
-        backup: 'foobucket',
-        checksum: 'none',
-        force: 'purge',
-        ignore: ['.svn', '.foo'],
-        links: 'follow',
-        provider: 'posix',
-        purge: true,
-        recurse: true,
-        recurselimit: 2,
-        replace: false,
+        ensure:                  'present',
+        mode:                    '0777',
+        owner:                   'root',
+        group:                   'root',
+        content:                 'This is the content',
+        backup:                  'foobucket',
+        checksum:                'none',
+        force:                   'purge',
+        ignore:                  ['.svn', '.foo'],
+        links:                   'follow',
+        provider:                'posix',
+        purge:                   true,
+        recurse:                 true,
+        recurselimit:            2,
+        replace:                 false,
         selinux_ignore_defaults: false,
-        selrange: 's0',
-        selrole: 'object_r',
-        seltype: 'var_t',
-        seluser: 'system_u',
-        show_diff: false,
-        source: 'puppet://modules/types/mydir',
-        sourceselect: 'first',
+        selrange:                's0',
+        selrole:                 'object_r',
+        seltype:                 'var_t',
+        seluser:                 'system_u',
+        show_diff:               false,
+        source:                  'puppet://modules/types/mydir',
+        sourceselect:            'first',
       }
     end
 
@@ -84,9 +84,9 @@ describe 'types::file' do
           is_expected.to contain_file('/tmp/foo').with(
             {
               'ensure' => value,
-              'owner'   => 'root',
-              'group'   => 'root',
-              'mode'    => '0644',
+              'owner'  => 'root',
+              'group'  => 'root',
+              'mode'   => '0644',
             },
           )
         }
@@ -100,7 +100,7 @@ describe 'types::file' do
     it 'fails' do
       expect {
         is_expected.to contain_class('types')
-      }.to raise_error(Puppet::Error, %r{types::file::/tmp/foo::ensure is invalid and does not match the regex\.})
+      }.to raise_error(Puppet::Error, %r{expects a match for Enum})
     end
   end
 
@@ -112,19 +112,19 @@ describe 'types::file' do
         it 'fails' do
           expect {
             is_expected.to contain_class('types')
-          }.to raise_error(Puppet::Error, %r{types::file::/tmp/foo::mode must be exactly 4 digits\.})
+          }.to raise_error(Puppet::Error, %r{expects a match for Stdlib::Filemode})
         end
       end
     end
   end
 
   context 'file with name that is not an absolute path' do
-    let(:params) { { ensure: 'invalid/path' } }
+    let(:title) { 'invalid/path' }
 
     it 'fails' do
       expect {
         is_expected.to contain_class('types')
-      }.to raise_error(Puppet::Error, %r{types::file::/tmp/foo::ensure is invalid and does not match the regex\.})
+      }.to raise_error(Puppet::Error, %r{expects a Stdlib::Absolutepath})
     end
   end
 end

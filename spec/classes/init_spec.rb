@@ -14,14 +14,14 @@ describe 'types' do
           '/mnt' => {
             'device'   => '/dev/dvd',
             'fstype'   => 'iso9660',
-            'atboot'   => 'no',
-            'remounts' => 'true',
+            'atboot'   => false,
+            'remounts' => true,
           },
           '/srv/nfs/home' => {
             'device'      => 'nfsserver:/export/home',
             'fstype'      => 'nfs',
             'options'     => 'rw,rsize=8192,wsize=8192',
-            'remounts'    => 'true',
+            'remounts'    => true,
             'blockdevice' => '-',
           }
         }
@@ -36,8 +36,8 @@ describe 'types' do
           'ensure'   => 'mounted',
           'device'   => '/dev/dvd',
           'fstype'   => 'iso9660',
-          'atboot'   => 'no',
-          'remounts' => 'true',
+          'atboot'   => false,
+          'remounts' => true,
         },
       )
     end
@@ -57,7 +57,7 @@ describe 'types' do
           'device'      => 'nfsserver:/export/home',
           'fstype'      => 'nfs',
           'options'     => 'rw,rsize=8192,wsize=8192',
-          'remounts'    => 'true',
+          'remounts'    => true,
           'blockdevice' => '-',
         },
       )
@@ -71,13 +71,18 @@ describe 'types' do
         },
       )
     end
+
+    it { is_expected.to contain_types__mount('/mnt') }             # only needed for 100% resource coverage
+    it { is_expected.to contain_types__mount('/srv/nfs/home') }    # only needed for 100% resource coverage
+    it { is_expected.to contain_common__mkdir_p('/mnt') }          # only needed for 100% resource coverage
+    it { is_expected.to contain_common__mkdir_p('/srv/nfs/home') } # only needed for 100% resource coverage
   end
 
   context 'with file_lines specified as a hash' do
     let(:facts) { { osfamily: 'RedHat' } }
     let :params do
       {
-        file_lines_hiera_merge: 'false',
+        file_lines_hiera_merge: false,
         file_lines: {
           'some_file' => {
             'path' => '/tmp/foo',
@@ -112,7 +117,7 @@ describe 'types' do
     it do
       is_expected.to contain_file_line('some_other_file').with(
         {
-          'path' => '/tmp/bar',
+          'path'  => '/tmp/bar',
           'line'  => 'option=asdf',
           'match' => '^option',
         },
@@ -128,6 +133,10 @@ describe 'types' do
         },
       )
     end
+
+    it { is_expected.to contain_types__file_line('some_file') }       # only needed for 100% resource coverage
+    it { is_expected.to contain_types__file_line('some_other_file') } # only needed for 100% resource coverage
+    it { is_expected.to contain_types__file_line('another_line') }    # only needed for 100% resource coverage
   end
 
   context 'with files specified as a hash' do
@@ -187,10 +196,10 @@ describe 'types' do
     it do
       is_expected.to contain_file('/localdisk').with(
         {
-          'ensure'  => 'directory',
-          'mode'    => '0755',
-          'owner'   => 'root',
-          'group'   => 'root',
+          'ensure' => 'directory',
+          'mode'   => '0755',
+          'owner'  => 'root',
+          'group'  => 'root',
         },
       )
     end
@@ -198,7 +207,7 @@ describe 'types' do
     it do
       is_expected.to contain_file('/tmp/file1').with(
         {
-          'ensure' => 'present',
+          'ensure'                  => 'present',
           'mode'                    => '0777',
           'owner'                   => 'root',
           'group'                   => 'root',
@@ -228,10 +237,10 @@ describe 'types' do
     it do
       is_expected.to contain_file('/tmp/file2').with(
         {
-          'ensure'  => 'present',
-          'mode'    => '0644',
-          'owner'   => 'root',
-          'group'   => 'root',
+          'ensure' => 'present',
+          'mode'   => '0644',
+          'owner'  => 'root',
+          'group'  => 'root',
         },
       )
     end
@@ -239,20 +248,27 @@ describe 'types' do
     it do
       is_expected.to contain_file('/tmp/dir').with(
         {
-          'ensure'  => 'directory',
-          'owner'   => 'root',
-          'group'   => 'root',
-          'mode'    => '0777',
+          'ensure' => 'directory',
+          'owner'  => 'root',
+          'group'  => 'root',
+          'mode'   => '0777',
         },
       )
     end
+
+    it { is_expected.to contain_file('/softlink') }           # only needed for 100% resource coverage
+    it { is_expected.to contain_types__file('/localdisk') }   # only needed for 100% resource coverage
+    it { is_expected.to contain_types__file('/softlink') }    # only needed for 100% resource coverage
+    it { is_expected.to contain_types__file('/tmp/dir') }     # only needed for 100% resource coverage
+    it { is_expected.to contain_types__file('/tmp/file1') }   # only needed for 100% resource coverage
+    it { is_expected.to contain_types__file('/tmp/file2') }   # only needed for 100% resource coverage
   end
 
   context 'with packages specified as a hash' do
     let(:facts) { { osfamily: 'RedHat' } }
     let :params do
       {
-        packages_hiera_merge: 'false',
+        packages_hiera_merge: false,
         packages: {
           'pkg1' => {
             'ensure'      => 'present',
@@ -292,13 +308,17 @@ describe 'types' do
         },
       )
     end
+
+    it { is_expected.to contain_types__package('pkg1') }
+    it { is_expected.to contain_types__package('pkg2') } # only needed for 100% resource coverage
+    it { is_expected.to contain_types__package('pkg3') } # only needed for 100% resource coverage
   end
 
   context 'with selboolean specified as a hash' do
     let(:facts) { { osfamily: 'RedHat' } }
     let :params do
       {
-        selbooleans_hiera_merge: 'false',
+        selbooleans_hiera_merge: false,
         selbooleans: {
           'nfs_export_all_ro' => {
             'value' => 'on',
@@ -328,6 +348,9 @@ describe 'types' do
         },
       )
     end
+
+    it { is_expected.to contain_types__selboolean('nfs_export_all_ro') } # only needed for 100% resource coverage
+    it { is_expected.to contain_types__selboolean('nfs_export_all_rw') } # only needed for 100% resource coverage
   end
 
   context 'with selboolean specified as an invalid type' do
@@ -347,7 +370,7 @@ describe 'types' do
     it 'fails' do
       expect {
         is_expected.to contain_class('types')
-      }.to raise_error(Puppet::Error, %r{\["not", "a", "hash"\] is not a Hash\.})
+      }.to raise_error(Puppet::Error, %r{expects a Hash value})
     end
   end
 
@@ -377,7 +400,7 @@ describe 'types' do
     it 'fails' do
       expect {
         is_expected.to contain_class('types')
-      }.to raise_error(Puppet::Error, %r{\["not", "a", "hash"\] is not a Hash\.})
+      }.to raise_error(Puppet::Error, %r{expects a Hash value})
     end
   end
 
@@ -427,6 +450,9 @@ describe 'types' do
         },
       )
     end
+
+    it { is_expected.to contain_types__cron('cronjob-1') } # only needed for 100% resource coverage
+    it { is_expected.to contain_types__cron('cronjob-2') } # only needed for 100% resource coverage
   end
 
   context 'with cron specified as an invalid type' do
@@ -435,7 +461,7 @@ describe 'types' do
     it 'fails' do
       expect {
         is_expected.to contain_class('types')
-      }.to raise_error(Puppet::Error, %r{\["not", "a", "hash"\] is not a Hash\.})
+      }.to raise_error(Puppet::Error, %r{expects a Hash value})
     end
   end
 
@@ -503,12 +529,15 @@ describe 'types' do
         },
       )
     end
+
+    it { is_expected.to contain_exec('exec-1') } # only needed for 100% resource coverage
+    it { is_expected.to contain_exec('exec-2') } # only needed for 100% resource coverage
   end
 
   context 'with services specified as a hash' do
     let :params do
       {
-        services_hiera_merge: 'false',
+        services_hiera_merge: false,
         services: {
           'service-stopped' => {
             'ensure' => 'stopped',
@@ -541,6 +570,9 @@ describe 'types' do
         },
       )
     end
+
+    it { is_expected.to contain_types__service('service-stopped') } # only needed for 100% resource coverage
+    it { is_expected.to contain_types__service('service-running') } # only needed for 100% resource coverage
   end
 
   context 'with service specified as an invalid type' do

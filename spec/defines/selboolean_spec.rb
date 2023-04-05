@@ -5,15 +5,15 @@ describe 'types::selboolean' do
   context 'selboolean with all options specified' do
     let(:params) do
       { persistent: true,
-        value: 'on',
-        provider: 'getsebool', }
+        value:      'on',
+        provider:   'getsebool', }
     end
 
     it do
       is_expected.to contain_selboolean('nfs_export_all_ro').with(
         {
           'persistent' => true,
-          'value' => 'on',
+          'value'      => 'on',
         },
       )
     end
@@ -28,7 +28,7 @@ describe 'types::selboolean' do
           is_expected.to contain_selboolean('nfs_export_all_ro').with(
             {
               'persistent' => false,
-              'value' => value,
+              'value'      => value,
             },
           )
         end

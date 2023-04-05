@@ -19,23 +19,23 @@ describe 'types::exec' do
     let(:title) { 'testing' }
     let(:params) do
       {
-        command: '/spec/testing.sh',
-        creates: '/creates',
-        cwd: '/spec',
+        command:     '/spec/testing.sh',
+        creates:     '/creates',
+        cwd:         '/spec',
         environment: 'test=true',
-        group: 'group',
-        logoutput: true,
-        onlyif: '/onlyif.sh',
-        path: '/path',
-        provider: 'shell',
-        refresh: '/refresh.sh',
+        group:       'group',
+        logoutput:   true,
+        onlyif:      '/onlyif.sh',
+        path:        '/path',
+        provider:    'shell',
+        refresh:     '/refresh.sh',
         refreshonly: true,
-        returns: 242,
-        timeout: 3,
-        tries: 3,
-        try_sleep: 3,
-        unless: '/unless.sh',
-        user: 'tester',
+        returns:     242,
+        timeout:     3,
+        tries:       3,
+        try_sleep:   3,
+        unless:      '/unless.sh',
+        user:        'tester',
       }
     end
 
@@ -68,7 +68,7 @@ describe 'types::exec' do
     let(:params) { { provider: 'invalid', command: '/spec/testing.sh' } }
 
     it 'fails' do
-      expect { is_expected.to contain_class(:subject) }.to raise_error(Puppet::Error, %r{types::exec::testing::provider is invalid and does not match the regex})
+      expect { is_expected.to contain_class(:subject) }.to raise_error(Puppet::Error, %r{expects an undef value or a match for Enum})
     end
   end
 
@@ -79,13 +79,13 @@ describe 'types::exec' do
         name:    ['creates', 'cwd'],
         valid:   ['/absolute/filepath', '/absolute/directory/'],
         invalid: ['./relative/path', ['array'], { 'ha' => 'sh' }, 3, 2.42, true, nil],
-        message: 'is not an absolute path',
+        message: 'expects a Stdlib::Absolutepath',
       },
       'validate_re' => {
         name:    ['provider'],
         valid:   ['posix', 'shell', 'windows'],
         invalid: ['string', ['array'], { 'ha' => 'sh' }, 3, 2.42, true, nil],
-        message: 'types::exec::testing::provider is invalid and does not match the regex',
+        message: 'expects an undef value or a match for Enum',
       },
     }
 

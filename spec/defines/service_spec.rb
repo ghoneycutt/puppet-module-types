@@ -17,27 +17,27 @@ describe 'types::service' do
     let(:title) { 'service_maximum' }
     let(:params) do
       {
-        ensure: 'stopped',
-        binary: '/bin/true',
-        control: 'SERVICE_MAXIMUM_START',
-        enable: 'manual',
+        ensure:     'stopped',
+        binary:     '/bin/true',
+        control:    'SERVICE_MAXIMUM_START',
+        enable:     'manual',
         hasrestart: 'true',
-        hasstatus: 'false',
-        manifest: '/bin/manifest',
-        path: '/etc/init.d',
-        pattern: 'service_maximum',
-        provider: 'init',
-        restart: '/bin/restart',
-        start: '/bin/start',
-        status: '/bin/status',
-        stop: '/bin/stop',
+        hasstatus:  'false',
+        manifest:   '/bin/manifest',
+        path:       '/etc/init.d',
+        pattern:    'service_maximum',
+        provider:   'init',
+        restart:    '/bin/restart',
+        start:      '/bin/start',
+        status:     '/bin/status',
+        stop:       '/bin/stop',
       }
     end
 
     it do
       is_expected.to contain_service('service_maximum').with(
         {
-          'ensure' => 'stopped',
+          'ensure'     => 'stopped',
           'binary'     => '/bin/true',
           'control'    => 'SERVICE_MAXIMUM_START',
           'enable'     => 'manual',
@@ -67,7 +67,7 @@ describe 'types::service' do
     it 'fails' do
       expect {
         is_expected.to contain_class('types')
-      }.to raise_error(Puppet::Error, %r{types::service::invalid::ensure can only be <stopped>, <false>, <running> or <true> and is set to <invalid>})
+      }.to raise_error(Puppet::Error, %r{expects a value of type Boolean or Enum})
     end
   end
 
@@ -94,7 +94,7 @@ describe 'types::service' do
       it 'fails' do
         expect {
           is_expected.to contain_class('types')
-        }.to raise_error(Puppet::Error, %r{types::service::invalid::enable can only be <true>, <false> or <manual> and is set to <invalid>})
+        }.to raise_error(Puppet::Error, %r{expects a value of type Boolean or Enum})
       end
     end
 
@@ -105,7 +105,7 @@ describe 'types::service' do
       it 'fails' do
         expect {
           is_expected.to contain_class('types')
-        }.to raise_error(Puppet::Error, %r{\["invalid", "type"\] is not a boolean\.})
+        }.to raise_error(Puppet::Error, %r{expects a value of type Boolean or Enum})
       end
     end
   end

@@ -13,7 +13,7 @@ describe 'types::file_line' do
     it do
       is_expected.to contain_file_line('some_file').with(
         {
-          'path' => '/tmp/foo',
+          'path'  => '/tmp/foo',
           'line'  => 'option=asdf',
           'match' => nil,
         },
@@ -25,9 +25,9 @@ describe 'types::file_line' do
     let(:params) do
       {
         ensure: 'present',
-        path: '/tmp/foo',
-        line: 'option=asdf',
-        match: '^option',
+        path:   '/tmp/foo',
+        line:   'option=asdf',
+        match:  '^option',
       }
     end
 
@@ -46,8 +46,8 @@ describe 'types::file_line' do
   describe 'with an invalid path for the path parameter' do
     let(:params) do
       {
-        path: 'invalid/path',
-        line: 'option=asdf',
+        path:  'invalid/path',
+        line:  'option=asdf',
         match: '^option',
       }
     end
@@ -55,7 +55,7 @@ describe 'types::file_line' do
     it 'fails' do
       expect {
         is_expected.to contain_class('types')
-      }.to raise_error(Puppet::Error, %r{"invalid/path" is not an absolute path})
+      }.to raise_error(Puppet::Error, %r{expects a Stdlib::Absolutepath})
     end
   end
 
@@ -63,16 +63,16 @@ describe 'types::file_line' do
     let(:params) do
       {
         ensure: '!invalid',
-        path: '/tmp/foo',
-        line: 'option=asdf',
-        match: '^option',
+        path:   '/tmp/foo',
+        line:   'option=asdf',
+        match:  '^option',
       }
     end
 
     it 'fails' do
       expect {
         is_expected.to contain_class('types')
-      }.to raise_error(Puppet::Error, %r{types::file_line::some_file::ensure is invalid and does not match the regex\.})
+      }.to raise_error(Puppet::Error, %r{expects a match for Enum})
     end
   end
 
@@ -80,8 +80,8 @@ describe 'types::file_line' do
     context 'for the path parameter' do
       let(:params) do
         {
-          path: true,
-          line: 'option=asdf',
+          path:  true,
+          line:  'option=asdf',
           match: '^option',
         }
       end
@@ -89,15 +89,15 @@ describe 'types::file_line' do
       it 'fails' do
         expect {
           is_expected.to contain_class('types')
-        }.to raise_error(Puppet::Error, %r{true is not an absolute path})
+        }.to raise_error(Puppet::Error, %r{expects a Stdlib::Absolutepath})
       end
     end
 
     context 'for the line parameter' do
       let(:params) do
         {
-          path: '/tmp/foo',
-          line: ['invalid', 'type'],
+          path:  '/tmp/foo',
+          line:  ['invalid', 'type'],
           match: '^option',
         }
       end
@@ -105,15 +105,15 @@ describe 'types::file_line' do
       it 'fails' do
         expect {
           is_expected.to contain_class('types')
-        }.to raise_error(Puppet::Error, %r{\["invalid", "type"\] is not a string})
+        }.to raise_error(Puppet::Error, %r{expects a String value})
       end
     end
 
     context 'for the match parameter' do
       let(:params) do
         {
-          path: '/tmp/foo',
-          line: 'option=asdf',
+          path:  '/tmp/foo',
+          line:  'option=asdf',
           match: ['invalid', 'type'],
         }
       end
@@ -121,7 +121,7 @@ describe 'types::file_line' do
       it 'fails' do
         expect {
           is_expected.to contain_class('types')
-        }.to raise_error(Puppet::Error, %r{\["invalid", "type"\] is not a string})
+        }.to raise_error(Puppet::Error, %r{expects a value of type Undef or String})
       end
     end
   end

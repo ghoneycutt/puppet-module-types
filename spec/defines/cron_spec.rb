@@ -21,18 +21,18 @@ describe 'types::cron' do
     let(:title) { 'cronjob-1' }
     let(:params) do
       {
-        command: '/usr/local/bin/script.sh',
-        ensure: 'absent',
+        command:     '/usr/local/bin/script.sh',
+        ensure:      'absent',
         environment: '/bin:/usr/bin',
-        hour: '1',
-        minute: '10',
-        month: 'Jan',
-        monthday: '1',
-        provider: 'crontab',
-        special: 'absent',
-        target: 'root',
-        user: 'root',
-        weekday: '6',
+        hour:        '1',
+        minute:      '10',
+        month:       'Jan',
+        monthday:    '1',
+        provider:    'crontab',
+        special:     'absent',
+        target:      'root',
+        user:        'root',
+        weekday:     '6',
       }
     end
     let(:facts) { { osfamily: 'RedHat' } }
@@ -71,7 +71,7 @@ describe 'types::cron' do
     it 'fails' do
       expect {
         is_expected.to contain_class('types')
-      }.to raise_error(Puppet::Error, %r{types::cron::invalid::ensure is invalid and does not match the regex\.})
+      }.to raise_error(Puppet::Error, %r{expects a match for Enum})
     end
   end
 end

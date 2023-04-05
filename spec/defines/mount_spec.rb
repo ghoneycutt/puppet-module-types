@@ -9,7 +9,15 @@ describe 'types::mount' do
         fstype: 'iso9660',
       }
     end
-    let(:facts) { { osfamily: 'RedHat' } }
+    let(:facts) do
+      {
+        os:
+          {
+            family: 'Redhat',
+          },
+        osfamily: 'RedHat', # needed for common module :(
+      }
+    end
 
     it do
       is_expected.to contain_mount('/mnt').with(
@@ -28,24 +36,24 @@ describe 'types::mount' do
     let(:title) { '/mnt' }
     let(:params) do
       {
-        device: '/dev/fiction',
-        fstype: 'iso9660',
-        ensure: 'absent',
-        atboot: false,
+        device:      '/dev/fiction',
+        fstype:      'iso9660',
+        ensure:      'absent',
+        atboot:      false,
         blockdevice: '/dev/blockdevice',
-        dump: '1',
-        options: 'ro',
-        pass: '1',
-        provider: 'customprovider',
-        remounts: true,
+        dump:        '1',
+        options:     'ro',
+        pass:        '1',
+        provider:    'customprovider',
+        remounts:    true,
       }
     end
-    let(:facts) { { osfamily: 'RedHat' } }
+    let(:facts) { { os: { family: 'Redhat' } } }
 
     it do
       is_expected.to contain_mount('/mnt').with(
         {
-          'ensure' => 'absent',
+          'ensure'      => 'absent',
           'atboot'      => false,
           'device'      => '/dev/fiction',
           'fstype'      => 'iso9660',
@@ -75,7 +83,7 @@ describe 'types::mount' do
     it 'fails' do
       expect {
         is_expected.to contain_class('types')
-      }.to raise_error(Puppet::Error, %r{types::mount::invalid::ensure is invalid and does not match the regex\.})
+      }.to raise_error(Puppet::Error, %r{expects a match for Enum})
     end
   end
 
@@ -94,6 +102,8 @@ describe 'types::mount' do
       it do
         is_expected.not_to contain_exec('mkdir_p-/mnt/test')
       end
+
+      it { is_expected.to contain_mount('/mnt/test') }
     end
   end
 
@@ -102,43 +112,61 @@ describe 'types::mount' do
       let(:title) { '/mnt' }
       let(:params) do
         {
-          device: '/dev/fiction',
-          fstype: 'iso9660',
+          device:  '/dev/fiction',
+          fstype:  'iso9660',
           options: 'defaults',
         }
       end
-      let(:facts) { { osfamily: 'Solaris' } }
+      let(:facts) do
+        {
+          os:
+            {
+              family: 'Solaris',
+            },
+          osfamily: 'Solaris', # needed for common module :(
+        }
+      end
 
       it do
         is_expected.to contain_mount('/mnt').with(
           {
-            'ensure' => 'mounted',
+            'ensure'  => 'mounted',
             'device'  => '/dev/fiction',
             'fstype'  => 'iso9660',
             'options' => '-',
           },
         )
       end
+
+      it { is_expected.to contain_common__mkdir_p('/mnt') }
     end
 
     context 'on osfamily that is not Solaris' do
       let(:title) { '/mnt' }
       let(:params) do
         {
-          device: '/dev/fiction',
-          fstype: 'iso9660',
+          device:  '/dev/fiction',
+          fstype:  'iso9660',
           options: 'defaults',
         }
       end
-      let(:facts) { { osfamily: 'Debian' } }
+      let(:facts) do
+        {
+          os:
+            {
+              family: 'Debian',
+            },
+          osfamily: 'Debian', # needed for common module :(
+        }
+      end
 
       it do
         is_expected.to contain_mount('/mnt').with(
           {
-            'ensure' => 'mounted',
-            'device'      => '/dev/fiction',
-            'fstype'      => 'iso9660',
-            'options'     => 'defaults',
+            'ensure'  => 'mounted',
+            'device'  => '/dev/fiction',
+            'fstype'  => 'iso9660',
+            'options' => 'defaults',
           },
         )
       end
