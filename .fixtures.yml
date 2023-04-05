@@ -7,13 +7,13 @@ fixtures:
       repo: 'https://github.com/puppetlabs/puppetlabs-stdlib.git'
       ref: '4.6.0'
     cron:
-      repo: 'git://github.com/puppetlabs/puppetlabs-cron_core.git'
+      repo: 'https://github.com/puppetlabs/puppetlabs-cron_core.git'
       ref: '1.0.0'
     mount:
-      repo: 'git://github.com/puppetlabs/puppetlabs-mount_core.git'
+      repo: 'https://github.com/puppetlabs/puppetlabs-mount_core.git'
       ref: '1.0.2'
     selinux:
-      repo: 'git://github.com/puppetlabs/puppetlabs-selinux_core.git'
+      repo: 'https://github.com/puppetlabs/puppetlabs-selinux_core.git'
       ref: '1.0.1'
   symlinks:
     types: "#{source_dir}"
