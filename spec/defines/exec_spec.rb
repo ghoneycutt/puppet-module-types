@@ -40,7 +40,7 @@ describe 'types::exec' do
     end
 
     it do
-      is_expected.to contain_exec('testing').with(
+      is_expected.to contain_exec('testing').only_with(
         {
           'command'     => '/spec/testing.sh',
           'creates'     => '/creates',

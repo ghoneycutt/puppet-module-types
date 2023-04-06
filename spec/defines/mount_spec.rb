@@ -11,10 +11,7 @@ describe 'types::mount' do
     end
     let(:facts) do
       {
-        os:
-          {
-            family: 'Redhat',
-          },
+        os: { family: 'Redhat' },
         osfamily: 'RedHat', # needed for common module :(
       }
     end
@@ -30,6 +27,8 @@ describe 'types::mount' do
         },
       )
     end
+
+    it { is_expected.to contain_common__mkdir_p('/mnt') }
   end
 
   context 'mount with all options specified' do
@@ -48,10 +47,9 @@ describe 'types::mount' do
         remounts:    true,
       }
     end
-    let(:facts) { { os: { family: 'Redhat' } } }
 
     it do
-      is_expected.to contain_mount('/mnt').with(
+      is_expected.to contain_mount('/mnt').only_with(
         {
           'ensure'      => 'absent',
           'atboot'      => false,
@@ -100,10 +98,16 @@ describe 'types::mount' do
       let(:facts) { { osfamily: 'RedHat' } }
 
       it do
-        is_expected.not_to contain_exec('mkdir_p-/mnt/test')
+        is_expected.to contain_mount('/mnt/test').with(
+          {
+            'ensure' => 'absent',
+            'device' => '/dev/fiction',
+            'fstype' => 'iso9660',
+          },
+        )
       end
 
-      it { is_expected.to contain_mount('/mnt/test') }
+      it { is_expected.not_to contain_exec('mkdir_p-/mnt/test') }
     end
   end
 
@@ -119,10 +123,7 @@ describe 'types::mount' do
       end
       let(:facts) do
         {
-          os:
-            {
-              family: 'Solaris',
-            },
+          os: { family: 'Solaris' },
           osfamily: 'Solaris', # needed for common module :(
         }
       end
@@ -152,10 +153,7 @@ describe 'types::mount' do
       end
       let(:facts) do
         {
-          os:
-            {
-              family: 'Debian',
-            },
+          os: { family: 'Debian' },
           osfamily: 'Debian', # needed for common module :(
         }
       end

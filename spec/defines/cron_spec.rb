@@ -2,9 +2,7 @@ require 'spec_helper'
 describe 'types::cron' do
   context 'cron with bare minimum specified' do
     let(:title) { 'cronjob-1' }
-    let(:params) do
-      { command: '/usr/local/bin/script.sh' }
-    end
+    let(:params) { { command: '/usr/local/bin/script.sh' } }
     let(:facts) { { osfamily: 'RedHat' } }
 
     it do
@@ -38,7 +36,7 @@ describe 'types::cron' do
     let(:facts) { { osfamily: 'RedHat' } }
 
     it do
-      is_expected.to contain_cron('cronjob-1').with(
+      is_expected.to contain_cron('cronjob-1').only_with(
         {
           'ensure'      => 'absent',
           'command'     => '/usr/local/bin/script.sh',

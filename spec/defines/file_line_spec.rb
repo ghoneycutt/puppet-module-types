@@ -32,7 +32,7 @@ describe 'types::file_line' do
     end
 
     it do
-      is_expected.to contain_file_line('some_file').with(
+      is_expected.to contain_file_line('some_file').only_with(
         {
           'ensure' => 'present',
           'path'   => '/tmp/foo',

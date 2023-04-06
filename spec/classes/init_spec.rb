@@ -80,7 +80,7 @@ describe 'types' do
 
   context 'with file_lines specified as a hash' do
     let(:facts) { { osfamily: 'RedHat' } }
-    let :params do
+    let(:params) do
       {
         file_lines_hiera_merge: false,
         file_lines: {
@@ -266,7 +266,7 @@ describe 'types' do
 
   context 'with packages specified as a hash' do
     let(:facts) { { osfamily: 'RedHat' } }
-    let :params do
+    let(:params) do
       {
         packages_hiera_merge: false,
         packages: {
@@ -316,7 +316,7 @@ describe 'types' do
 
   context 'with selboolean specified as a hash' do
     let(:facts) { { osfamily: 'RedHat' } }
-    let :params do
+    let(:params) do
       {
         selbooleans_hiera_merge: false,
         selbooleans: {
@@ -535,7 +535,7 @@ describe 'types' do
   end
 
   context 'with services specified as a hash' do
-    let :params do
+    let(:params) do
       {
         services_hiera_merge: false,
         services: {

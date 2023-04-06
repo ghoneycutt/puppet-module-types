@@ -4,16 +4,19 @@ describe 'types::selboolean' do
 
   context 'selboolean with all options specified' do
     let(:params) do
-      { persistent: true,
+      {
+        persistent: true,
         value:      'on',
-        provider:   'getsebool', }
+        provider:   'getsebool',
+      }
     end
 
     it do
-      is_expected.to contain_selboolean('nfs_export_all_ro').with(
+      is_expected.to contain_selboolean('nfs_export_all_ro').only_with(
         {
           'persistent' => true,
           'value'      => 'on',
+          'provider'   => 'getsebool',
         },
       )
     end
@@ -37,9 +40,7 @@ describe 'types::selboolean' do
   end
 
   context 'selboolean with invalid value for provider' do
-    let(:params) do
-      { provider: false, }
-    end
+    let(:params) { { provider: false } }
 
     it 'fails' do
       expect {
@@ -49,9 +50,7 @@ describe 'types::selboolean' do
   end
 
   context 'selboolean with invalid value for persistent' do
-    let(:params) do
-      { persistent: 'invalid setting', }
-    end
+    let(:params) { { persistent: 'invalid setting' } }
 
     it 'fails' do
       expect {
@@ -61,9 +60,7 @@ describe 'types::selboolean' do
   end
 
   context 'selboolean with invalid value for value' do
-    let(:params) do
-      { value: 'invalid setting', }
-    end
+    let(:params) { { value: 'invalid setting' } }
 
     it 'fails' do
       expect {
@@ -73,9 +70,7 @@ describe 'types::selboolean' do
   end
 
   context 'selboolean with no value - value is mandatory' do
-    let(:params) do
-      { persistent: false }
-    end
+    let(:params) { { persistent: false } }
 
     it 'fails' do
       expect {

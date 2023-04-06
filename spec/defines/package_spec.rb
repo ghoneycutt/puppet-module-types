@@ -2,14 +2,9 @@ require 'spec_helper'
 describe 'types::package' do
   context 'package with bare minimum specified' do
     let(:title) { 'pkg1' }
+    let(:facts) { { osfamily: 'RedHat' } }
 
-    it do
-      is_expected.to contain_package('pkg1').with(
-        {
-          'ensure' => 'present',
-        },
-      )
-    end
+    it { is_expected.to contain_package('pkg1').with_ensure('present') }
   end
 
   context 'package with all options specified' do
@@ -26,10 +21,9 @@ describe 'types::package' do
         uninstall_options: '--uninstall_option',
       }
     end
-    let(:facts) { { osfamily: 'RedHat' } }
 
     it do
-      is_expected.to contain_package('pkg1').with(
+      is_expected.to contain_package('pkg1').only_with(
         {
           'ensure'            => 'installed',
           'adminfile'         => '/path/to/adminfile',
@@ -46,12 +40,7 @@ describe 'types::package' do
 
   context 'package with invalid configfiles' do
     let(:title) { 'pkg1' }
-    let(:params) do
-      {
-        configfiles: 'invalid',
-      }
-    end
-    let(:facts) { { osfamily: 'RedHat' } }
+    let(:params) { { configfiles: 'invalid' } }
 
     it 'fails' do
       expect {
@@ -62,11 +51,7 @@ describe 'types::package' do
 
   context 'package with invalid type for ensure' do
     let(:title) { 'invalidtype' }
-    let(:params) do
-      {
-        ensure: ['invalid', 'type'],
-      }
-    end
+    let(:params) { { ensure: ['invalid', 'type'] } }
 
     it 'fails' do
       expect {
@@ -77,12 +62,7 @@ describe 'types::package' do
 
   context 'package with invalid responsefile' do
     let(:title) { 'pkg1' }
-    let(:params) do
-      {
-        responsefile: 'invalid/path'
-      }
-    end
-    let(:facts) { { osfamily: 'RedHat' } }
+    let(:params) { { responsefile: 'invalid/path' } }
 
     it 'fails' do
       expect {

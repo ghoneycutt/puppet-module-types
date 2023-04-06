@@ -35,7 +35,7 @@ describe 'types::service' do
     end
 
     it do
-      is_expected.to contain_service('service_maximum').with(
+      is_expected.to contain_service('service_maximum').only_with(
         {
           'ensure'     => 'stopped',
           'binary'     => '/bin/true',
@@ -58,11 +58,7 @@ describe 'types::service' do
 
   context 'service with invalid ensure' do
     let(:title) { 'invalid' }
-    let(:params) do
-      {
-        ensure: 'invalid',
-      }
-    end
+    let(:params) { { ensure: 'invalid' } }
 
     it 'fails' do
       expect {

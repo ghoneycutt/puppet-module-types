@@ -45,7 +45,7 @@ describe 'types::file' do
     end
 
     it do
-      is_expected.to contain_file('/tmp/foo').with(
+      is_expected.to contain_file('/tmp/foo').only_with(
         {
           'ensure'                  => 'present',
           'mode'                    => '0777',
