@@ -82,7 +82,6 @@ describe 'types' do
     let(:facts) { { osfamily: 'RedHat' } }
     let(:params) do
       {
-        file_lines_hiera_merge: false,
         file_lines: {
           'some_file' => {
             'path' => '/tmp/foo',
@@ -268,7 +267,6 @@ describe 'types' do
     let(:facts) { { osfamily: 'RedHat' } }
     let(:params) do
       {
-        packages_hiera_merge: false,
         packages: {
           'pkg1' => {
             'ensure'      => 'present',
@@ -318,7 +316,6 @@ describe 'types' do
     let(:facts) { { osfamily: 'RedHat' } }
     let(:params) do
       {
-        selbooleans_hiera_merge: false,
         selbooleans: {
           'nfs_export_all_ro' => {
             'value' => 'on',
@@ -537,7 +534,6 @@ describe 'types' do
   context 'with services specified as a hash' do
     let(:params) do
       {
-        services_hiera_merge: false,
         services: {
           'service-stopped' => {
             'ensure' => 'stopped',
