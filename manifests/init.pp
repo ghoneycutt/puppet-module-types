@@ -28,15 +28,19 @@
 # @param services
 #   Hash of resource type `service`.
 #
+# @param ensure_packages
+#   Array of packages to install with `ensure_packages`.
+#
 class types (
-  Hash    $crons                   = {},
-  Hash    $execs                   = {},
-  Hash    $file_lines              = {},
-  Hash    $files                   = {},
-  Hash    $mounts                  = {},
-  Hash    $packages                = {},
-  Hash    $selbooleans             = {},
-  Hash    $services                = {},
+  Hash  $crons           = {},
+  Hash  $execs           = {},
+  Hash  $file_lines      = {},
+  Hash  $files           = {},
+  Hash  $mounts          = {},
+  Hash  $packages        = {},
+  Hash  $selbooleans     = {},
+  Hash  $services        = {},
+  Array $ensure_packages = [],
 ) {
   create_resources('types::cron',$crons)
   create_resources('types::exec',$execs)
@@ -46,4 +50,5 @@ class types (
   create_resources('types::package',$packages)
   create_resources('types::selboolean',$selbooleans)
   create_resources('types::service',$services)
+  ensure_packages($ensure_packages)
 }

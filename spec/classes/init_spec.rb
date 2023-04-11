@@ -580,4 +580,33 @@ describe 'types' do
       }.to raise_error(Puppet::Error)
     end
   end
+
+  context 'with ensure_packages specified as an array [pkg1, pkg2]' do
+    let(:params) do
+      {
+        ensure_packages: ['pkg1', 'pkg2'],
+      }
+    end
+
+    it { is_expected.to contain_package('pkg1') }
+    it { is_expected.to contain_package('pkg2') }
+  end
+
+  context 'with ensure_packages specified as an array with duplicate package names [dupllicate, dupllicate, unique]' do
+    let(:params) { { ensure_packages: ['dupllicate', 'dupllicate', 'unique'] } }
+
+    it { is_expected.to contain_package('dupllicate') }
+    it { is_expected.to contain_package('unique') }
+  end
+
+  context 'with ensure_packages specifying an already declared package name' do
+    let(:params) { { ensure_packages: ['dupllicate', 'unique'] } }
+    let(:pre_condition) do
+      "package { 'dupllicate':
+       }"
+    end
+
+    it { is_expected.to contain_package('dupllicate') }
+    it { is_expected.to contain_package('unique') }
+  end
 end
