@@ -14,6 +14,7 @@ describe 'types::package' do
         ensure:            'installed',
         adminfile:         '/path/to/adminfile',
         configfiles:       'keep',
+        enable_only:       true,
         install_options:   '--installoption',
         provider:          'yum',
         responsefile:      '/path/to/responsefile',
@@ -28,6 +29,7 @@ describe 'types::package' do
           'ensure'            => 'installed',
           'adminfile'         => '/path/to/adminfile',
           'configfiles'       => 'keep',
+          'enable_only'       => true,
           'install_options'   => '--installoption',
           'provider'          => 'yum',
           'responsefile'      => '/path/to/responsefile',
@@ -68,6 +70,17 @@ describe 'types::package' do
       expect {
         is_expected.to contain_class('types')
       }.to raise_error(Puppet::Error, %r{expects a Stdlib::Absolutepath})
+    end
+  end
+
+  context 'package with invalid enable_only' do
+    let(:title) { 'pkg1' }
+    let(:params) { { enable_only: 'invalid' } }
+
+    it 'fails' do
+      expect {
+        is_expected.to contain_class('types')
+      }.to raise_error(Puppet::Error, %r{expects a value of type Undef or Boolean})
     end
   end
 end
