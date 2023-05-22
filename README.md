@@ -40,27 +40,11 @@ Hash of resource type `cron`.
 
 - *Default*: undef
 
-crons_hiera_merge
------------------
-Boolean to control merges of all found instances of types::crons in Hiera. This is useful for specifying cron resources at different levels of the hierarchy and having them all included in the catalog.
-
-This will default to 'true' in future versions.
-
-- *Default*: false
-
 execs
 -----
 Hash of resource type `exec`.
 
 - *Default*: undef
-
-execs_hiera_merge
------------------
-Boolean to control merges of all found instances of types::execs in Hiera. This is useful for specifying exec resources at different levels of the hierarchy and having them all included in the catalog.
-
-This will default to 'true' in future versions.
-
-- *Default*: false
 
 file_lines
 ----------
@@ -68,29 +52,11 @@ Hash of resource type `file_line`.
 
 - *Default*: undef
 
-file_lines_hiera_merge
-----------------------
-Boolean to control merges of all found instances of types::file_lines in Hiera.
-This is useful for specifying file_line resources at different levels of the
-hierarchy and having them all included in the catalog.
-
-This will default to 'true' in future versions.
-
-- *Default*: true
-
 files
 -----
 Hash of resource type `file`.
 
 - *Default*: undef
-
-files_hiera_merge
------------------
-Boolean to control merges of all found instances of types::files in Hiera. This is useful for specifying file resources at different levels of the hierarchy and having them all included in the catalog.
-
-This will default to 'true' in future versions.
-
-- *Default*: false
 
 mounts
 ------
@@ -98,25 +64,11 @@ Hash of resource type `mount`.
 
 - *Default*: undef
 
-mounts_hiera_merge
-------------------
-Boolean to control merges of all found instances of types::mounts in Hiera. This is useful for specifying mount resources at different levels of the hierarchy and having them all included in the catalog.
-
-This will default to 'true' in future versions.
-
-- *Default*: false
-
 packages
 --------
 Hash of resource type `package`.
 
 - *Default*: undef
-
-packages_hiera_merge
---------------------
-Boolean to control merges of all found instances of types::packages in Hiera. This is useful for specifying package resources at different levels of the hierarchy and having them all included in the catalog.
-
-- *Default*: true
 
 selbooleans
 -----------
@@ -124,23 +76,11 @@ Hash of resource type `selboolean`.
 
 - *Default*: undef
 
-selbooleans_hiera_merge
------------------------
-Boolean to control merges of all found instances of types::selboolean in Hiera. This is useful for specifying selboolean resources at different levels of the hierarchy and having them all included in the catalog.
-
-- *Default*: true
-
 services
 --------
 Hash of resource type `service`.
 
 - *Default*: undef
-
-services_hiera_merge
---------------------
-Boolean to control merges of all found instances of types::services in Hiera. This is useful for specifying file resources at different levels of the hierarchy and having them all included in the catalog.
-
-- *Default*: true
 
 ===
 

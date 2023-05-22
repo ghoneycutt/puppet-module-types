@@ -1,87 +1,86 @@
 require 'spec_helper'
 describe 'types::package' do
-
   context 'package with bare minimum specified' do
     let(:title) { 'pkg1' }
-    it {
-      should contain_package('pkg1').with({
-        'ensure'  => 'present',
-      })
-    }
+    let(:facts) { { osfamily: 'RedHat' } }
+
+    it { is_expected.to contain_package('pkg1').with_ensure('present') }
   end
 
   context 'package with all options specified' do
     let(:title) { 'pkg1' }
     let(:params) do
       {
-        :ensure            => 'installed',
-        :adminfile         => '/path/to/adminfile',
-        :configfiles       => 'keep',
-        :install_options   => '--installoption',
-        :provider          => 'yum',
-        :responsefile      => '/path/to/responsefile',
-        :source            => 'http://source/URL/',
-        :uninstall_options => '--uninstall_option',
+        ensure:            'installed',
+        adminfile:         '/path/to/adminfile',
+        configfiles:       'keep',
+        enable_only:       true,
+        install_options:   '--installoption',
+        provider:          'yum',
+        responsefile:      '/path/to/responsefile',
+        source:            'http://source/URL/',
+        uninstall_options: '--uninstall_option',
       }
     end
-    let(:facts) { { :osfamily => 'RedHat' } }
 
-    it {
-      should contain_package('pkg1').with({
-        'ensure'            => 'installed',
-        'adminfile'         => '/path/to/adminfile',
-        'configfiles'       => 'keep',
-        'install_options'   => '--installoption',
-        'provider'          => 'yum',
-        'responsefile'      => '/path/to/responsefile',
-        'source'            => 'http://source/URL/',
-        'uninstall_options' => '--uninstall_option',
-      })
-    }
+    it do
+      is_expected.to contain_package('pkg1').only_with(
+        {
+          'ensure'            => 'installed',
+          'adminfile'         => '/path/to/adminfile',
+          'configfiles'       => 'keep',
+          'enable_only'       => true,
+          'install_options'   => '--installoption',
+          'provider'          => 'yum',
+          'responsefile'      => '/path/to/responsefile',
+          'source'            => 'http://source/URL/',
+          'uninstall_options' => '--uninstall_option',
+        },
+      )
+    end
   end
 
   context 'package with invalid configfiles' do
     let(:title) { 'pkg1' }
-    let(:params) do
-      {
-        :configfiles       => 'invalid',
-      }
-    end
-    let(:facts) { { :osfamily => 'RedHat' } }
+    let(:params) { { configfiles: 'invalid' } }
 
-    it 'should fail' do
+    it 'fails' do
       expect {
-        should contain_class('types')
-      }.to raise_error(Puppet::Error,/types::package::pkg1::configfiles is invalid and does not match the regex\./)
+        is_expected.to contain_class('types')
+      }.to raise_error(Puppet::Error, %r{expects an undef value or a match for Enum})
     end
   end
 
   context 'package with invalid type for ensure' do
     let(:title) { 'invalidtype' }
-    let(:params) do
-      {
-        :ensure => ['invalid','type'],
-      }
-    end
+    let(:params) { { ensure: ['invalid', 'type'] } }
 
-    it 'should fail' do
+    it 'fails' do
       expect {
-        should contain_class('types')
-      }.to raise_error(Puppet::Error,/\["invalid", "type"\] is not a string\./)
+        is_expected.to contain_class('types')
+      }.to raise_error(Puppet::Error, %r{expects a match for Enum})
     end
   end
 
   context 'package with invalid responsefile' do
     let(:title) { 'pkg1' }
-    let(:params) do
-      { :responsefile => 'invalid/path' }
-    end
-    let(:facts) { { :osfamily => 'RedHat' } }
+    let(:params) { { responsefile: 'invalid/path' } }
 
-    it 'should fail' do
+    it 'fails' do
       expect {
-        should contain_class('types')
-      }.to raise_error(Puppet::Error,/"invalid\/path" is not an absolute path\./)
+        is_expected.to contain_class('types')
+      }.to raise_error(Puppet::Error, %r{expects a Stdlib::Absolutepath})
+    end
+  end
+
+  context 'package with invalid enable_only' do
+    let(:title) { 'pkg1' }
+    let(:params) { { enable_only: 'invalid' } }
+
+    it 'fails' do
+      expect {
+        is_expected.to contain_class('types')
+      }.to raise_error(Puppet::Error, %r{expects a value of type Undef or Boolean})
     end
   end
 end
