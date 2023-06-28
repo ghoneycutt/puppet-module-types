@@ -74,7 +74,11 @@ class types (
 
   if $crons != undef {
     if $crons_hiera_merge_real == true {
-      $crons_real = hiera_hash('types::crons')
+      if versioncmp($::puppetversion, '4.0.0') < 0 {
+        $crons_real = hiera_hash('types::crons')
+      } else {
+        $crons_real = lookup('types::crons', Hash, 'deep', {})
+      }
     } else {
       $crons_real = $crons
     }
@@ -84,7 +88,11 @@ class types (
 
   if $execs != undef {
     if $execs_hiera_merge_bool == true {
-      $execs_real = hiera_hash('types::execs')
+      if versioncmp($::puppetversion, '4.0.0') < 0 {
+        $execs_real = hiera_hash('types::execs')
+      } else {
+        $execs_real = lookup('types::execs', Hash, 'deep', {})
+      }
     } else {
       $execs_real = $execs
     }
@@ -94,7 +102,11 @@ class types (
 
   if $file_lines != undef {
     if $file_lines_hiera_merge_real == true {
-      $file_lines_real = hiera_hash('types::file_lines')
+      if versioncmp($::puppetversion, '4.0.0') < 0 {
+        $file_lines_real = hiera_hash('types::file_lines')
+      } else {
+        $file_lines_real = lookup('types::file_lines', Hash, 'deep', {})
+      }
     } else {
       $file_lines_real = $file_lines
     }
@@ -104,7 +116,11 @@ class types (
 
   if $files != undef {
     if $files_hiera_merge_real == true {
-      $files_real = hiera_hash('types::files')
+      if versioncmp($::puppetversion, '4.0.0') < 0 {
+        $files_real = hiera_hash('types::files')
+      } else {
+        $files_real = lookup('types::files', Hash, 'deep', {})
+      }
     } else {
       $files_real = $files
     }
@@ -114,7 +130,11 @@ class types (
 
   if $mounts != undef {
     if $mounts_hiera_merge_real == true {
-      $mounts_real = hiera_hash('types::mounts')
+      if versioncmp($::puppetversion, '4.0.0') < 0 {
+        $mounts_real = hiera_hash('types::mounts')
+      } else {
+        $mounts_real = lookup('types::mounts', Hash, 'deep', {})
+      }
     } else {
       $mounts_real = $mounts
     }
@@ -124,7 +144,11 @@ class types (
 
   if $packages != undef {
     if $packages_hiera_merge_real == true {
-      $packages_real = hiera_hash('types::packages')
+      if versioncmp($::puppetversion, '4.0.0') < 0 {
+        $packages_real = hiera_hash('types::packages')
+      } else {
+        $packages_real = lookup('types::packages', Hash, 'deep', {})
+      }
     } else {
       $packages_real = $packages
     }
@@ -134,7 +158,11 @@ class types (
 
   if $selbooleans != undef {
     if $selbooleans_hiera_merge_real == true {
-      $selbooleans_real = hiera_hash('types::selboolean')
+      if versioncmp($::puppetversion, '4.0.0') < 0 {
+        $selbooleans_real = hiera_hash('types::selboolean')
+      } else {
+        $selbooleans_real = lookup('types::selboolean', Hash, 'deep', {})
+      }
     } else {
       $selbooleans_real = $selbooleans
     }
@@ -144,7 +172,11 @@ class types (
 
   if $services != undef {
     if $services_hiera_merge_real == true {
-      $services_real = hiera_hash('types::services')
+      if versioncmp($::puppetversion, '4.0.0') < 0 {
+        $services_real = hiera_hash('types::services')
+      } else {
+        $services_real = lookup('types::services', Hash, 'deep', {})
+      }
     } else {
       $services_real = $services
     }
