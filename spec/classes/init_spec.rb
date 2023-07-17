@@ -174,8 +174,7 @@ describe 'types' do
             'source'                  => 'puppet://modules/types/mydir',
             'sourceselect'            => 'first',
           },
-          '/tmp/file2' => {
-          },
+          '/tmp/file2' => {},
           '/softlink' => {
             'ensure' => 'link',
             'target' => '/etc/motd',
